@@ -7,7 +7,7 @@ export default function Navbar() {
       <Container>
         <Menu.Item as={NavLink} to='/' header >
           <img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}} />
-          Tabela
+          Dairy
         </Menu.Item>
         <Menu.Item as={NavLink} to="/activities" name="Activities" />
         <Menu.Item>
