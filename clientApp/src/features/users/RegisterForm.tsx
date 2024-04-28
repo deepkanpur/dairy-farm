@@ -18,7 +18,10 @@ export default observer(function RegisterForm() {
                 displayName: Yup.string().required(),
                 userName: Yup.string().required(),
                 email: Yup.string().required().email(),
-                password: Yup.string().required()
+                password: Yup.string()
+                    .required('Password must be complex')
+                    .min(6, 'Password must be at least 6 characters')
+                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/, 'Password must have One Uppercase, One Lowercase, One Number character')
             })}
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (

@@ -32,7 +32,7 @@ export default class UserStore {
         store.modalStore.closeModal();
     }
 
-    logout = () => {
+    logout = () => {        
         store.commonStore.setToken(null);
         this.user = null;
         router.navigate('/');
