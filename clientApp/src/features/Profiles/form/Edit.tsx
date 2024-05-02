@@ -1,8 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from 'yup';
-import { Form } from "react-router-dom";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import { Button } from "semantic-ui-react";
