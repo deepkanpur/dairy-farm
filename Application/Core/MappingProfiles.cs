@@ -1,4 +1,5 @@
 using Application.Activities;
+using Application.DairyFarms;
 using AutoMapper;
 using Domain;
 
@@ -21,6 +22,15 @@ namespace Application.Core
 
             CreateMap<AppUser, Profiles.Profile>()
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            CreateMap<DairyFarm, DairyFarmDto>()
+                .ForMember(d => d.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ForMember(d => d.AddedByUserName, o=> o.MapFrom(s => s.AddedBy.DisplayName));
+            
+            CreateMap<DairyFarm, DairyFarmDetailDto>();
+            CreateMap<DairyFarmPhoto, DairyFarmPhotosDto>()
+                .ForMember(d => d.AddedByUserName, o => o.MapFrom(s => s.AddedBy.DisplayName));
+            
         }
         
     }
