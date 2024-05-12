@@ -22,7 +22,7 @@ public class Add
         {
             RuleFor(x => x.DairyFarmPhoto.Longitude).NotEmpty();
             RuleFor(x => x.DairyFarmPhoto.Latitude).NotEmpty();
-            RuleFor(x => x.DairyFarmPhoto.File).NotEmpty();
+            RuleFor(x => x.DairyFarmPhoto.File).NotNull().NotEmpty();
             RuleFor(x => x.FarmId).NotEmpty();
         }
     }
@@ -31,6 +31,7 @@ public class Add
     {
         public async Task<Result<DairyFarmPhoto>> Handle(Command request, CancellationToken cancellationToken)
         {
+            if (request.DairyFarmPhoto.File == null) return Result<DairyFarmPhoto>.Failure("Please provide the photo to upload");
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == userAccessor.GetUserName(), cancellationToken);
             if (user == null) return null;
 

@@ -20,7 +20,7 @@ export default class UserStore {
         console.log(user);
         store.commonStore.setToken(user.token);
         runInAction(() => this.user = user);
-        router.navigate('/activities');
+        router.navigate('/dairies');
         store.modalStore.closeModal();
     }
 
@@ -28,7 +28,7 @@ export default class UserStore {
         const user = await agent.Account.register(cred);
         store.commonStore.setToken(user.token);
         runInAction(() => this.user = user);
-        router.navigate('/activities');
+        router.navigate('/dairies');
         store.modalStore.closeModal();
     }
 

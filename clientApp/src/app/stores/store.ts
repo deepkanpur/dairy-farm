@@ -4,6 +4,7 @@ import CommonStore from "./commonStore";
 import UserStore from "./userStore";
 import ModalStore from "./modalStore";
 import ProfileStore from "./profileStore";
+import DairyStore from "./dairyStore";
 
 interface Store {
     activityStore: ActivityStore;
@@ -11,6 +12,7 @@ interface Store {
     userStore: UserStore;
     modalStore: ModalStore
     profileStore: ProfileStore;
+    dairyStore: DairyStore;
 }
 
 export const store: Store = {
@@ -18,7 +20,8 @@ export const store: Store = {
     commonStore: new CommonStore(),
     userStore: new UserStore(),
     modalStore: new ModalStore(),
-    profileStore: new ProfileStore()
+    profileStore: new ProfileStore(),
+    dairyStore: new DairyStore()
 }
 
 export const StoreContext = React.createContext(store);

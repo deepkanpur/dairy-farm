@@ -1,4 +1,4 @@
-import { Menu, Container, Button, Image, Dropdown, DropdownItem, DropdownMenu } from "semantic-ui-react";
+import { Menu, Container, Button, Image, Dropdown, DropdownItem, DropdownMenu, Icon } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
@@ -13,6 +13,8 @@ export default observer(function Navbar() {
           <img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}} />
           Dairy
         </Menu.Item>
+        <Menu.Item as={NavLink} to="/dairies" name="Dairies" />
+        <Menu.Item as={NavLink} to="/addDairy"><Icon name='plus'/></Menu.Item>
         <Menu.Item as={NavLink} to="/activities" name="Activities" />
         <Menu.Item as={NavLink} to="/errors" name="Errors" />
         <Menu.Item>

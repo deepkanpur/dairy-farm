@@ -5,6 +5,7 @@ import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
+import { Dairy, DairyFormValues } from "../models/dairy";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -80,6 +81,14 @@ const Activities = {
   attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})  
 };
 
+const Dairies = {
+  list: () => requests.get<Dairy[]>("/farms"),
+  details: (id: string) => requests.get<Dairy>(`/farms/${id}`),
+  create: (dairy: DairyFormValues) => requests.post<void>("/farms", dairy),
+  update: (dairy: DairyFormValues) => requests.put<void>(`/farms/${dairy.id}`, dairy),
+  // delete: (id: string) => requests.del<void>(`/farms/${id}`),
+};
+
  const Account = {
   current: () => requests.get<User>('/account'),
   login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -102,6 +111,7 @@ const Profiles = {
 
 const agent = {
   Activities,
+  Dairies,
   Account,
   Profiles
 };

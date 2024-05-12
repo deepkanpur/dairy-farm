@@ -251,6 +251,79 @@ namespace Persistence
                     }
                 };
 
+                var dairyFarms = new List<DairyFarm>
+                {
+                    new DairyFarm{
+                        AddedBy = users[0],
+                        AddedDate = DateTime.UtcNow,
+                        Address = "123 Main St",
+                        City = "London",
+                        Area = "Ontario",
+                        BuffaloCount = 10,
+                        BusinessName = "Ramesh Dairy",
+                        ContactName = "Ramesh",
+                        ContactNumber = "123-456-7890",
+                        CowCount = 2,
+                        Landmark = "Near the big tree",
+                        Latitude = 43.123456M,
+                        Longitude = -81.123456M,
+                        Pincode = "123456",
+                        WorkerCount = 3,
+                    },
+                    new DairyFarm{
+                        AddedBy = users[1],
+                        AddedDate = DateTime.UtcNow,
+                        Address = "456 Main St",
+                        City = "London",
+                        Area = "Ontario",
+                        BuffaloCount = 12,
+                        BusinessName = "Surya Dairy",
+                        ContactName = "Vimal",
+                        ContactNumber = "222-456-7890",
+                        CowCount = 4,
+                        Landmark = "Near the temple",
+                        Latitude = 43.123456M,
+                        Longitude = -81.123456M,
+                        Pincode = "123456",
+                        WorkerCount = 2,
+                    },
+                    new DairyFarm{
+                        AddedBy = users[0],
+                        AddedDate = DateTime.UtcNow,
+                        Address = "789 Main St",
+                        City = "London",
+                        Area = "Ontario",
+                        BuffaloCount = 5,
+                        BusinessName = "Verma Dairy",
+                        ContactName = "Gopichand",
+                        ContactNumber = "333-456-7890",
+                        CowCount = 1,
+                        Landmark = "Near the pani tanki",
+                        Latitude = 43.123456M,
+                        Longitude = -81.123456M,
+                        Pincode = "123456",
+                        WorkerCount = 1,
+                    },
+                    new DairyFarm{
+                        AddedBy = users[0],
+                        AddedDate = DateTime.UtcNow,
+                        Address = "555 Main St",
+                        City = "London",
+                        Area = "Ontario",
+                        BuffaloCount = 20,
+                        BusinessName = "Yadav Dairy",
+                        ContactName = "Manish",
+                        ContactNumber = "222-456-7890",
+                        CowCount = 4,
+                        Landmark = "Near the school",
+                        Latitude = 43.123456M,
+                        Longitude = -81.123456M,
+                        Pincode = "123456",
+                        WorkerCount = 5,
+                    },
+                };
+
+                await context.DairyFarms.AddRangeAsync(dairyFarms);
                 await context.Activities.AddRangeAsync(activities);
                 await context.SaveChangesAsync();
             }

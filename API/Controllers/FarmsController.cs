@@ -20,9 +20,16 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateActivity(DairyFarm dairyFarm)
+        public async Task<IActionResult> CreateDairyForm(DairyFarm dairyFarm)
         {
             return HandleResult(await Mediator.Send(new Create.Command { DairyFarm = dairyFarm }));            
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDairyForm(Guid id, DairyFarm dairyFarm)
+        {
+            dairyFarm.Id = id;
+            return Ok();
         }
 
 
