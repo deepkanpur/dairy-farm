@@ -7,6 +7,14 @@ export interface DairyPhoto {
   addedByUserName: string
 }
 
+export interface IAddDairyPhoto {
+  dairyId: string
+  file: Blob
+  description: string
+  latitude: number
+  longitude: number
+}
+
 export interface IDairy {
   id: string;
   businessName: string;

@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Dairy, DairyFormValues } from "../models/dairy";
+import { Dairy, DairyFormValues, IAddDairyPhoto } from "../models/dairy";
 import { format } from "date-fns";
 import agent from "../api/agent";
 
@@ -107,7 +107,7 @@ export default class DairyStore {
         if(dairy.id) {
           const updatedDairy = { ...this.getDairy(dairy.id), ...dairy };
           this.dairyRegistry.set(dairy.id, updatedDairy as Dairy);
-          this.selectedDairy = dairy as Dairy;
+          this.selectedDairy = dairy as unknown as Dairy;
         }
         this.editMode = false;
       });
@@ -119,4 +119,27 @@ export default class DairyStore {
       });
     }
   };
+
+  uploadPhoto = async (addPhoto: IAddDairyPhoto) => {
+    this.loading = true;
+    try {
+      const response = await agent.Dairies.uploadPhoto(addPhoto);
+      const photo = response.data;
+      runInAction(() => {
+        if (this.selectedDairy) {
+          this.selectedDairy.photos?.push(photo);
+          if (photo.isMain) {
+            this.selectedDairy.image = photo.url;
+          }
+        }
+      });
+      this.loading = false;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+  }; 
 }

@@ -5,7 +5,7 @@ import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
-import { Dairy, DairyFormValues } from "../models/dairy";
+import { Dairy, DairyFormValues, DairyPhoto, IAddDairyPhoto } from "../models/dairy";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -87,6 +87,16 @@ const Dairies = {
   create: (dairy: DairyFormValues) => requests.post<void>("/farms", dairy),
   update: (dairy: DairyFormValues) => requests.put<void>(`/farms/${dairy.id}`, dairy),
   // delete: (id: string) => requests.del<void>(`/farms/${id}`),
+  uploadPhoto: (photo: IAddDairyPhoto) => {
+    const formData = new FormData();
+    formData.append('File', photo.file);
+    formData.append('Description', photo.description);
+    formData.append('Latitude', photo.latitude.toString());
+    formData.append('Longitude', photo.longitude.toString());
+    return axios.post<DairyPhoto>(`/farms/${photo.dairyId}/photos`, formData, {
+      headers: {'Content-Type': 'multipart/form-data'}
+    });
+  }
 };
 
  const Account = {

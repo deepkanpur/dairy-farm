@@ -2,10 +2,15 @@ import { observer } from "mobx-react-lite";
 import { Dairy } from "../../../app/models/dairy";
 import { Button, Icon, Item, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { useStore } from "../../../app/stores/store";
+import ImageCapture from "../../../app/common/imageCapture/ImageCapture";
 interface Props {
   dairy: Dairy;
+  uploadPhoto: (file: Blob) => void;
+  loading: boolean;
 }
-export default observer(function DairyDetailedHeader({ dairy }: Props) {
+export default observer(function DairyDetailedHeader({ dairy, uploadPhoto, loading }: Props) {
+  const {modalStore} = useStore();
   return (
     <Segment>
       <Item.Group>
@@ -21,12 +26,12 @@ export default observer(function DairyDetailedHeader({ dairy }: Props) {
               {dairy.city} - {dairy.pincode}
               {dairy.photos && dairy.photos.length <= 4 && (
                 <Button
-                  as={Link}
-                  to={`/dairies/${dairy.id}`}
+                  onClick={() => modalStore.openModal(<ImageCapture uploadPhoto={uploadPhoto}/>)} 
                   icon="photo"
                   color="blue"
                   floated="right"
                   content="Add"
+                  loading={loading}
                 />
               )}
             </Item.Description>
