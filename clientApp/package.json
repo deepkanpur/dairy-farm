@@ -23,6 +23,7 @@
     "react-datepicker": "^6.9.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-geolocated": "^4.1.2",
     "react-html5-camera-photo": "^1.5.11",
     "react-router-dom": "^6.23.0",
     "react-toastify": "^10.0.5",

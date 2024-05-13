@@ -9,20 +9,20 @@ namespace Application.DairyFarms;
 
 public class Details
 {
-    public class Query : IRequest<Result<DairyFarmDetailDto>>
+    public class Query : IRequest<Result<DairyFarmDto>>
     {
         public Guid Id { get; set; }
     }
 
-    public class Handler(DataContext context, IMapper mapper) : IRequestHandler<Query, Result<DairyFarmDetailDto>>
+    public class Handler(DataContext context, IMapper mapper) : IRequestHandler<Query, Result<DairyFarmDto>>
     {
-        public async Task<Result<DairyFarmDetailDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<DairyFarmDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             var dairyFarm = await context.DairyFarms.Include(x => x.Photos)
-                .ProjectTo<DairyFarmDetailDto>(mapper.ConfigurationProvider)
+                .ProjectTo<DairyFarmDto>(mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-            return Result<DairyFarmDetailDto>.Success(dairyFarm);
+            return Result<DairyFarmDto>.Success(dairyFarm);
         }
     }
 }

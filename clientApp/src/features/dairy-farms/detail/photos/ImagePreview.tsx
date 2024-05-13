@@ -3,6 +3,7 @@ import { useStore } from "../../../../app/stores/store";
 import { useParams } from "react-router-dom";
 import { IAddDairyPhoto } from "../../../../app/models/dairy";
 import { useState } from "react";
+import GeoLocation from "../../../../app/common/GeoLocation";
 
 interface Props {
   dataUri: string;
@@ -13,21 +14,20 @@ export default function ImagePreview({dataUri, setDataUri }: Props) {
   const { uploadPhoto } = dairyStore;
   const { id } = useParams<{ id: string }>();
   const [description, SetDescription] = useState<string>('');
+  const geo = new GeoLocation().getCoords();
 
-  function handlePhotoUpload(dataUri: string) {
+  function handlePhotoUpload(dataUri: string) {    
     modalStore.closeModal();
-    const file = dataURItoBlob(dataUri)
-
+    const file = dataURItoBlob(dataUri);
     const addPhoto: IAddDairyPhoto = {
       file : file,
       dairyId : id!,
       description: description,
-      latitude: 26.4097694,
-      longitude: 80.2554600,
+      latitude: geo.latitude,
+      longitude: geo.longitude,
     };
-    console.log('addPhoto: ', addPhoto);
     uploadPhoto(addPhoto);
-}
+  }
 
   function dataURItoBlob(dataURI: string) {
     // convert base64/URLEncoded data component to raw binary data held in a string

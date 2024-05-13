@@ -1,5 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -10,7 +11,7 @@ namespace Application.DairyFarms.Photos;
 
 public class Add
 {
-    public class Command : IRequest<Result<DairyFarmPhoto>>
+    public class Command : IRequest<Result<DairyFarmPhotosDto>>
     {
         public Guid FarmId { get; set; }
         public AddPhotoRequest DairyFarmPhoto { get; set; }
@@ -27,11 +28,14 @@ public class Add
         }
     }
 
-    public class Handler(DataContext context, IUserAccessor userAccessor, IPhotoAccessor photoAccessor) : IRequestHandler<Command, Result<DairyFarmPhoto>>
+    public class Handler(DataContext context, 
+        IUserAccessor userAccessor, 
+        IPhotoAccessor photoAccessor,
+        IMapper mapper) : IRequestHandler<Command, Result<DairyFarmPhotosDto>>
     {
-        public async Task<Result<DairyFarmPhoto>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<DairyFarmPhotosDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request.DairyFarmPhoto.File == null) return Result<DairyFarmPhoto>.Failure("Please provide the photo to upload");
+            if (request.DairyFarmPhoto.File == null) return Result<DairyFarmPhotosDto>.Failure("Please provide the photo to upload");
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == userAccessor.GetUserName(), cancellationToken);
             if (user == null) return null;
 
@@ -55,9 +59,9 @@ public class Add
 
             var result = await context.SaveChangesAsync(cancellationToken) > 0;
 
-            if (result) return Result<DairyFarmPhoto>.Success(photo);
+            if (result) return Result<DairyFarmPhotosDto>.Success(mapper.Map<DairyFarmPhotosDto>(photo));
 
-            return Result<DairyFarmPhoto>.Failure("Problem adding Dairy Form Photo");
+            return Result<DairyFarmPhotosDto>.Failure("Problem adding Dairy Form Photo");
         }
     }
 }

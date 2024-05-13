@@ -56,9 +56,10 @@ export default class DairyStore {
         dairy = await agent.Dairies.details(id);
         this.setDairy(dairy);
         runInAction(() => {
+          console.log('dairy2', dairy);
           this.selectedDairy = dairy;
+          this.setLoadingInitial(false);
         });
-        this.setLoadingInitial(false);
       } catch (error) {
         console.log(error);
         this.setLoadingInitial(false);
@@ -84,11 +85,11 @@ export default class DairyStore {
     this.loading = true;
     try {
       await agent.Dairies.create(dairy);
-      const newDairy = new Dairy(dairy);
+      // const newDairy = new Dairy(dairy);
+      // this.setDairy(newDairy);
       runInAction(() => {
-        this.dairyRegistry.set(newDairy.id, newDairy);
-        this.selectedDairy = newDairy;
-        this.editMode = false;
+        // this.selectedDairy = newDairy;
+        this.loading = false;
       });
     } catch (error) {
       console.log(error);
@@ -106,7 +107,7 @@ export default class DairyStore {
       runInAction(() => {
         if(dairy.id) {
           const updatedDairy = { ...this.getDairy(dairy.id), ...dairy };
-          this.dairyRegistry.set(dairy.id, updatedDairy as Dairy);
+          this.dairyRegistry.set(dairy.id, updatedDairy as unknown as Dairy);
           this.selectedDairy = dairy as unknown as Dairy;
         }
         this.editMode = false;
@@ -124,10 +125,10 @@ export default class DairyStore {
     this.loading = true;
     try {
       const response = await agent.Dairies.uploadPhoto(addPhoto);
-      const photo = response.data;
+      const photo = response.data;      
       runInAction(() => {
         if (this.selectedDairy) {
-          this.selectedDairy.photos?.push(photo);
+          this.selectedDairy.photos.push(photo);
           if (photo.isMain) {
             this.selectedDairy.image = photo.url;
           }

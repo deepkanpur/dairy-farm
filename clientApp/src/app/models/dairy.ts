@@ -15,7 +15,7 @@ export interface IAddDairyPhoto {
   longitude: number
 }
 
-export interface IDairy {
+export class Dairy {
   id: string;
   businessName: string;
   contactName: string;
@@ -25,34 +25,16 @@ export interface IDairy {
   area: string;
   landmark: string;
   city: string;
-  buffaloCount: number;
-  cowCount: number;
-  workerCount: number;
-  addedByUserName: string;
-  addedDate: Date | null;
-  image: string;
-  locationUrl: string;
-  photos?: DairyPhoto[];
-}
-
-export class Dairy implements IDairy {
-  id: string;
-  businessName: string;
-  contactName: string;
-  contactNumber: string;
-  pincode: string;
-  address: string;
-  area: string;
-  landmark: string;
-  city: string;
-  buffaloCount: number;
-  cowCount: number;
-  workerCount: number;
+  buffaloCount: number | null;
+  cowCount?: number;
+  workerCount: number | null = null;
   addedByUserName: string = "";
   addedDate: Date | null = null;
   image: string = "";
   locationUrl: string = "";
-  photos?: DairyPhoto[];
+  longitude: number;
+  latitude: number;
+  photos: DairyPhoto[];
 
   constructor(init: DairyFormValues) {
     this.id = init.id!;
@@ -64,9 +46,12 @@ export class Dairy implements IDairy {
     this.area = init.area;
     this.landmark = init.landmark;
     this.city = init.city;
-    this.buffaloCount = init.buffaloCount;
-    this.cowCount = init.cowCount;
-    this.workerCount = init.workerCount;
+    this.buffaloCount = init.buffaloCount as unknown as number;
+    this.cowCount = init.cowCount as unknown as number;
+    this.workerCount = init.workerCount as unknown as number;
+    this.longitude = init.longitude;
+    this.latitude = init.latitude;
+    this.photos = [];
   }
 }
 
@@ -80,9 +65,9 @@ export class DairyFormValues {
   area: string = "";
   landmark: string = "";
   city: string = 'Kanpur';
-  buffaloCount: number = 0;
-  cowCount: number = 0;
-  workerCount: number = 0;
+  buffaloCount: string = '';
+  cowCount: string = '';
+  workerCount: string = '';
   latitude: number = 26.4097694;
   longitude: number = 80.2554751;
 

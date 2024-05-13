@@ -31,7 +31,6 @@ namespace Application.Core
                     + s.Latitude + "+" 
                     + s.Longitude));
             
-            CreateMap<DairyFarm, DairyFarmDetailDto>();
             CreateMap<DairyFarmPhoto, DairyFarmPhotosDto>()
                 .ForMember(d => d.AddedByUserName, o => o.MapFrom(s => s.AddedBy.DisplayName))
                 .ForMember(d => d.LocationUrl, o=> o.MapFrom(s => 

@@ -9,10 +9,12 @@ import {v4 as uuid} from 'uuid';
 import * as Yup from 'yup';
 import { Form, Formik } from "formik";
 import MyTextInput from "../../../app/common/form/MyTextInput";
+import GeoLocation from "../../../app/common/GeoLocation";
 
 export default observer(function DairyForm() {
   const {dairyStore} = useStore();
   const {createDairy, updateDairy, loadDairy, loadingInitial} = dairyStore;
+  const geo = new GeoLocation().getCoords();
   
   const {id} = useParams();
   const navigate = useNavigate();
@@ -27,9 +29,9 @@ export default observer(function DairyForm() {
     address: Yup.string().required().max(200),
     area: Yup.string().required().max(100),    
     city: Yup.string().required().max(100),    
-    buffaloCount: Yup.number().min(0, 'Can not be less than 0').required('Number of Buffaloes'),
+    buffaloCount: Yup.number().min(1, 'Can not be less than 1').required('Number of Buffaloes'),
     cowCount: Yup.number().min(0, 'Can not be less than 0').required('Number of Cows'),
-    workerCount: Yup.number().min(0, 'Can not be less than 0').required('Number of Workers'),
+    workerCount: Yup.number().min(1, 'Can not be less than 1').required('Number of Workers'),
   });
 
   useEffect(()=>{
@@ -37,9 +39,8 @@ export default observer(function DairyForm() {
   },[id, loadDairy])
 
   function handleFormSubmit(dairy: DairyFormValues){
-    //TODO update this with actual location
-    // dairy.latitude = 26.4097694;
-    // dairy.longitude = 80.2554751;
+    dairy.latitude = geo.latitude;
+    dairy.longitude = geo.longitude;
 
     if(!dairy.id) {
       dairy.id = uuid();
@@ -62,11 +63,11 @@ export default observer(function DairyForm() {
           <MyTextInput placeholder="Business Name" name={'businessName'} />
           <MyTextInput placeholder="Contact Name" name={'contactName'} />
           <MyTextInput placeholder="Contact Number" name={'contactNumber'} />
-          <MyTextInput placeholder="Pincode" name={'pincode'} />
           <MyTextInput placeholder="Address" name={'address'} />
-          <MyTextInput placeholder="Area" name={'area'} />
           <MyTextInput placeholder="Landmark" name={'landmark'} />
+          <MyTextInput placeholder="Area" name={'area'} />
           <MyTextInput placeholder="City" name={'city'} />
+          <MyTextInput placeholder="Pincode" name={'pincode'} />
           <MyTextInput placeholder="Buffalo Count" name={'buffaloCount'} />
           <MyTextInput placeholder="Cow Count" name={'cowCount'} />
           <MyTextInput placeholder="Worker Count" name={'workerCount'} />

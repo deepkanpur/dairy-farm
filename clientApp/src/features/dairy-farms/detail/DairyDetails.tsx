@@ -20,8 +20,8 @@ export default observer(function DairyDetails() {
 
   return (
     <>
-      <DairyDetailedHeader dairy={dairy} />      
-      <DairyPhotos diaryPhotos={dairy.photos}/>
+      <DairyDetailedHeader/>      
+      <DairyPhotos />
       <DairyDetailedChat />
     </>
   );

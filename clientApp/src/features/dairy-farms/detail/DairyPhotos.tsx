@@ -1,16 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { DairyPhoto } from "../../../app/models/dairy";
 import { Item, Segment } from "semantic-ui-react";
-interface Props {
-  diaryPhotos: DairyPhoto[] | undefined;
-}
-export default observer(function DairyPhotos({ diaryPhotos }: Props) {
-  if (diaryPhotos && diaryPhotos.length <= 0) return null;
+import { useStore } from "../../../app/stores/store";
+
+export default observer(function DairyPhotos() {
+  const { dairyStore: {selectedDairy}  } = useStore();
+  console.log('selectedDairy', selectedDairy);
+  if (!selectedDairy || !selectedDairy.photos || selectedDairy.photos.length <= 0) return null;
   return (
     <Segment>
       <Item.Group>
         <Item.Content>
-          {diaryPhotos!.map((photo) => (
+          {selectedDairy.photos.map((photo) => (
             <Item key={photo.id}>
               <Item.Image
                 size="medium"

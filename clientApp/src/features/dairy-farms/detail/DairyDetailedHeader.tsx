@@ -1,14 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { Dairy } from "../../../app/models/dairy";
 import { Button, Icon, Item, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../app/stores/store";
 import ImageCapture from "./photos/ImageCapture";
-interface Props {
-  dairy: Dairy;
-}
-export default observer(function DairyDetailedHeader({ dairy }: Props) {
-  const {modalStore, dairyStore: {loading}} = useStore();
+import LoadingComponent from "../../../app/layout/loadingComponent";
+
+export default observer(function DairyDetailedHeader() {
+  const {modalStore, dairyStore} = useStore();
+  const {loading, selectedDairy: dairy} = dairyStore;
+
+  if (!dairy) return <LoadingComponent content="Loading Dairy Header..." />;
+  
   return (
     <Segment>
       <Item.Group>

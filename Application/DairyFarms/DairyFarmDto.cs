@@ -16,7 +16,7 @@ public class DairyFarmDto
     public Int16 WorkerCount { get; set; }
     public string AddedByUserName { get; set; }
     public string LocationUrl { get; set; }
-    public ICollection<DairyFarmPhotosDto> Photos { get; set; }
+    public ICollection<DairyFarmPhotosDto> Photos { get; set; } = [];
 
     public DateTime AddedDate { get; set; }
     public string Image { get; set; }

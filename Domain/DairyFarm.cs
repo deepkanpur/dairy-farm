@@ -11,7 +11,7 @@ public class DairyFarm
     public string Landmark { get; set; }
     public string City { get; set; }
     public Int16 BuffaloCount { get; set; }
-    public Int16 CowCount { get; set; }
+    public Int16? CowCount { get; set; }
     public Int16 WorkerCount { get; set; }
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
