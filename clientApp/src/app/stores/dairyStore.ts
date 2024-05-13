@@ -132,8 +132,8 @@ export default class DairyStore {
             this.selectedDairy.image = photo.url;
           }
         }
+        this.loading = false;
       });
-      this.loading = false;
     } catch (error) {
       console.log(error);
     } finally {

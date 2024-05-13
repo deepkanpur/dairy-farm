@@ -3,14 +3,12 @@ import { Dairy } from "../../../app/models/dairy";
 import { Button, Icon, Item, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../app/stores/store";
-import ImageCapture from "../../../app/common/imageCapture/ImageCapture";
+import ImageCapture from "./photos/ImageCapture";
 interface Props {
   dairy: Dairy;
-  uploadPhoto: (file: Blob) => void;
-  loading: boolean;
 }
-export default observer(function DairyDetailedHeader({ dairy, uploadPhoto, loading }: Props) {
-  const {modalStore} = useStore();
+export default observer(function DairyDetailedHeader({ dairy }: Props) {
+  const {modalStore, dairyStore: {loading}} = useStore();
   return (
     <Segment>
       <Item.Group>
@@ -26,7 +24,7 @@ export default observer(function DairyDetailedHeader({ dairy, uploadPhoto, loadi
               {dairy.city} - {dairy.pincode}
               {dairy.photos && dairy.photos.length <= 4 && (
                 <Button
-                  onClick={() => modalStore.openModal(<ImageCapture uploadPhoto={uploadPhoto}/>)} 
+                  onClick={() => modalStore.openModal(<ImageCapture />)} 
                   icon="photo"
                   color="blue"
                   floated="right"
