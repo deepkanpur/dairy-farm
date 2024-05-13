@@ -15,7 +15,7 @@ export interface IAddDairyPhoto {
   longitude: number
 }
 
-export class Dairy {
+export interface Dairy {
   id: string;
   businessName: string;
   contactName: string;
@@ -25,34 +25,34 @@ export class Dairy {
   area: string;
   landmark: string;
   city: string;
-  buffaloCount: number | null;
-  cowCount?: number;
-  workerCount: number | null = null;
-  addedByUserName: string = "";
-  addedDate: Date | null = null;
-  image: string = "";
-  locationUrl: string = "";
+  buffaloCount: number;
+  cowCount: number;
+  workerCount: number;
+  addedByUserName: string;
+  addedDate: Date | null;
+  image: string;
+  locationUrl: string;
   longitude: number;
   latitude: number;
   photos: DairyPhoto[];
 
-  constructor(init: DairyFormValues) {
-    this.id = init.id!;
-    this.businessName = init.businessName;
-    this.contactName = init.contactName;
-    this.contactNumber = init.contactNumber;
-    this.pincode = init.pincode;
-    this.address = init.address;
-    this.area = init.area;
-    this.landmark = init.landmark;
-    this.city = init.city;
-    this.buffaloCount = init.buffaloCount as unknown as number;
-    this.cowCount = init.cowCount as unknown as number;
-    this.workerCount = init.workerCount as unknown as number;
-    this.longitude = init.longitude;
-    this.latitude = init.latitude;
-    this.photos = [];
-  }
+  // constructor(init: DairyFormValues) {
+  //   this.id = init.id!;
+  //   this.businessName = init.businessName;
+  //   this.contactName = init.contactName;
+  //   this.contactNumber = init.contactNumber;
+  //   this.pincode = init.pincode;
+  //   this.address = init.address;
+  //   this.area = init.area;
+  //   this.landmark = init.landmark;
+  //   this.city = init.city;
+  //   this.buffaloCount = init.buffaloCount as unknown as number;
+  //   this.cowCount = init.cowCount as unknown as number;
+  //   this.workerCount = init.workerCount as unknown as number;
+  //   this.longitude = init.longitude;
+  //   this.latitude = init.latitude;
+  //   this.photos = [];
+  // }
 }
 
 export class DairyFormValues {
@@ -65,9 +65,9 @@ export class DairyFormValues {
   area: string = "";
   landmark: string = "";
   city: string = 'Kanpur';
-  buffaloCount: string = '';
-  cowCount: string = '';
-  workerCount: string = '';
+  buffaloCount: string | number = '';
+  cowCount: string | number = '';
+  workerCount: string | number = '';
   latitude: number = 26.4097694;
   longitude: number = 80.2554751;
 

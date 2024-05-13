@@ -1,5 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -10,7 +11,7 @@ namespace Application.DairyFarms;
 
 public class Create
 {
-    public class Command : IRequest<Result<Unit>>
+    public class Command : IRequest<Result<DairyFarmDto>>
     {
         public DairyFarm DairyFarm { get; set; }
     }
@@ -23,10 +24,9 @@ public class Create
         }
     }
 
-
-    public class Handler(DataContext context, IUserAccessor userAccessor) : IRequestHandler<Command, Result<Unit>>
+    public class Handler(DataContext context, IUserAccessor userAccessor, IMapper mapper) : IRequestHandler<Command, Result<DairyFarmDto>>
     {
-        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<DairyFarmDto>> Handle(Command request, CancellationToken cancellationToken)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == userAccessor.GetUserName(), cancellationToken);
             if(user == null) return null;
@@ -37,9 +37,10 @@ public class Create
 
             var result = await context.SaveChangesAsync() > 0;
 
-            if(result) return Result<Unit>.Success(Unit.Value);
 
-            return Result<Unit>.Failure("Failed to create Dairy Farm");
+            if(result) return Result<DairyFarmDto>.Success(mapper.Map<DairyFarmDto>(request.DairyFarm));
+
+            return Result<DairyFarmDto>.Failure("Failed to create Dairy Farm");
         }
     }
 }

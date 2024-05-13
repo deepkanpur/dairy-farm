@@ -41,6 +41,7 @@ public class Add
 
             var dairyFarm = await context.DairyFarms.Include(x => x.Photos).FirstOrDefaultAsync(x => x.Id == request.FarmId, cancellationToken);
             if (dairyFarm == null) return null;
+            if(dairyFarm.Photos.Count >= 5) return Result<DairyFarmPhotosDto>.Failure("You can only upload 5 photos");
 
             var photoUploadResult = await photoAccessor.AddPhoto(request.DairyFarmPhoto.File);
 

@@ -3,8 +3,7 @@ import { Item, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 
 export default observer(function DairyPhotos() {
-  const { dairyStore: {selectedDairy}  } = useStore();
-  console.log('selectedDairy', selectedDairy);
+  const { dairyStore: {selectedDairy}  } = useStore();  
   if (!selectedDairy || !selectedDairy.photos || selectedDairy.photos.length <= 0) return null;
   return (
     <Segment>

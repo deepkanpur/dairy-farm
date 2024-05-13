@@ -8,7 +8,6 @@ import LoadingComponent from "../../../app/layout/loadingComponent";
 export default observer(function DairyDetailedHeader() {
   const {modalStore, dairyStore} = useStore();
   const {loading, selectedDairy: dairy} = dairyStore;
-
   if (!dairy) return <LoadingComponent content="Loading Dairy Header..." />;
   
   return (

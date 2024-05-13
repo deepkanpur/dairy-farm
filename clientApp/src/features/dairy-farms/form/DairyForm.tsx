@@ -35,7 +35,7 @@ export default observer(function DairyForm() {
   });
 
   useEffect(()=>{
-    if(id) loadDairy(id).then(dairy => setDairy(new DairyFormValues(dairy!)))
+    if(id) loadDairy(id).then(dairy => setDairy(new DairyFormValues(dairy)))
   },[id, loadDairy])
 
   function handleFormSubmit(dairy: DairyFormValues){

@@ -56,7 +56,6 @@ export default class DairyStore {
         dairy = await agent.Dairies.details(id);
         this.setDairy(dairy);
         runInAction(() => {
-          console.log('dairy2', dairy);
           this.selectedDairy = dairy;
           this.setLoadingInitial(false);
         });
@@ -84,11 +83,11 @@ export default class DairyStore {
   createDairy = async (dairy: DairyFormValues) => {
     this.loading = true;
     try {
-      await agent.Dairies.create(dairy);
+      const newDairy = await agent.Dairies.create(dairy);
       // const newDairy = new Dairy(dairy);
-      // this.setDairy(newDairy);
+      this.setDairy(newDairy);
       runInAction(() => {
-        // this.selectedDairy = newDairy;
+        this.selectedDairy = newDairy;
         this.loading = false;
       });
     } catch (error) {
