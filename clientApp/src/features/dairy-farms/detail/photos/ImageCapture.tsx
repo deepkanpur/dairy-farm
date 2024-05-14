@@ -1,4 +1,4 @@
-import Camera from "react-html5-camera-photo";
+import Camera, { IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import { useState } from "react";
 import ImagePreview from "./ImagePreview";
@@ -16,6 +16,7 @@ export default function ImageCapture() {
           onTakePhoto={(dataUri) => {
             setDataUri(dataUri);
           }}
+          imageType = {IMAGE_TYPES.JPG}
         />
       )}
     </>
