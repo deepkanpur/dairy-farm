@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { Dairy, DairyFormValues, IAddDairyPhoto } from "../models/dairy";
 import { format } from "date-fns";
 import agent from "../api/agent";
+import { Pagination, PagingParams } from "../models/pagination";
 
 export default class DairyStore {
   dairyRegistry = new Map<string, Dairy>();
@@ -9,6 +10,8 @@ export default class DairyStore {
   editMode = false;
   loading = false;
   loadingInitial = false;
+  pagination: Pagination | null = null;
+  pagingParams = new PagingParams();
 
   constructor() {
     makeAutoObservable(this);
@@ -31,19 +34,35 @@ export default class DairyStore {
     );
   }
 
+  get axiosParams() {
+    const params = new URLSearchParams();
+    params.append('pageNumber', this.pagingParams.pageNumber.toString());
+    params.append('pageSize', this.pagingParams.pageSize.toString());
+    return params;
+  }
+
   loadDairies = async () => {
     this.setLoadingInitial(true);
     try {
-      const dairies = await agent.Dairies.list();
-      dairies.forEach((dairy) => {
+      const result = await agent.Dairies.list(this.axiosParams);
+      result.data.forEach((dairy) => {
         this.setDairy(dairy);
       });
+      this.setPagination(result.pagination);
       this.setLoadingInitial(false);
     } catch (error) {
       console.log(error);
       this.setLoadingInitial(false);
     }
   };
+
+  setPagination = (pagination: Pagination) => {
+    this.pagination = pagination;
+  }
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  }
 
   loadDairy = async (id: string) => {
     let dairy = this.getDairy(id);

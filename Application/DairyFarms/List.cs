@@ -1,7 +1,6 @@
 using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -10,20 +9,23 @@ namespace Application.DairyFarms;
 
 public class List
 {
-    public class Query : IRequest<Result<List<DairyFarmDto>>>
+    public class Query : IRequest<Result<PagedList<DairyFarmDto>>>
     {
-
+        public PagingParams Params { get; set; }
     }        
 
-    public class Handler(DataContext context, IMapper mapper) : IRequestHandler<Query, Result<List<DairyFarmDto>>>
-    {            
-        public async Task<Result<List<DairyFarmDto>>> Handle(Query request, CancellationToken cancellationToken)
+    public class Handler(DataContext context, IMapper mapper) : IRequestHandler<Query, Result<PagedList<DairyFarmDto>>>
+    {
+        public async Task<Result<PagedList<DairyFarmDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var dailyFarms = await context.DairyFarms.Include(x => x.Photos)
+            var query = context.DairyFarms.Where(a => a.IsActive)
+                .Include(x => x.Photos).Where(x => x.Photos.Any(p => p.IsActive))
                 .ProjectTo<DairyFarmDto>(mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
 
-            return Result<List<DairyFarmDto>>.Success(dailyFarms);
+            return Result<PagedList<DairyFarmDto>>.Success(
+                await PagedList<DairyFarmDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize, cancellationToken)
+            );
         }
     }
 }

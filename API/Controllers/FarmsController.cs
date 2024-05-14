@@ -1,3 +1,4 @@
+using Application.Core;
 using Application.DairyFarms;
 using Application.DairyFarms.Photos;
 using Domain;
@@ -8,9 +9,9 @@ namespace API.Controllers
     public class FarmsController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> GetDairyFarms()
+        public async Task<IActionResult> GetDairyFarms([FromQuery] PagingParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
         [HttpGet("{id}")]

@@ -6,6 +6,7 @@ import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
 import { Dairy, DairyFormValues, DairyPhoto, IAddDairyPhoto } from "../models/dairy";
+import { PaginatedResult } from "../models/pagination";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -26,6 +27,11 @@ axios.interceptors.request.use( config => {
 axios.interceptors.response.use(
   async (response) => {
     await sleep(1000);
+    const pagination = response.headers['pagination'];
+    if(pagination) {
+      response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+      return response as AxiosResponse<PaginatedResult<unknown>>
+    }
     return response;
   },
   (error: AxiosError) => {
@@ -73,7 +79,8 @@ const requests = {
 };
 
 const Activities = {
-  list: () => requests.get<Activity[]>("/activities"),
+  list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>
+    ("/activities", {params}).then(responseBody),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) => requests.post<void>("/activities", activity),
   update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
@@ -82,7 +89,7 @@ const Activities = {
 };
 
 const Dairies = {
-  list: () => requests.get<Dairy[]>("/farms"),
+  list: (params: URLSearchParams) => axios.get<PaginatedResult<Dairy[]>>("/farms", {params}).then(responseBody),
   details: (id: string) => requests.get<Dairy>(`/farms/${id}`),
   create: (dairy: DairyFormValues) => requests.post<Dairy>("/farms", dairy),
   update: (dairy: DairyFormValues) => requests.put<void>(`/farms/${dairy.id}`, dairy),
