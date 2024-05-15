@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Dairy } from "../../../app/models/dairy";
 import { Icon, Item, Segment} from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import DairyStaff from "../DairyStaff";
 
 interface Props {
   dairy: Dairy;
@@ -32,9 +33,7 @@ export default observer(function DairyListItem({ dairy }: Props) {
                             }
                         </Item.Meta>
                         <Item.Extra>
-                            <Icon name='motorcycle'/> {dairy.buffaloCount} Buffaloes
-                            <Icon name='battery half' style={{marginLeft:5}}/> {dairy.cowCount} Cows
-                            <Icon name='users' style={{marginLeft:5}}/> {dairy.workerCount} Workers
+                            <DairyStaff dairy={dairy} />
                         </Item.Extra>
                     </Item.Content>
                 </Item>

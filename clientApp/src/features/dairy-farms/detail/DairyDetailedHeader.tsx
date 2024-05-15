@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../../app/stores/store";
 import ImageCapture from "./photos/ImageCapture";
 import LoadingComponent from "../../../app/layout/loadingComponent";
+import DairyStaff from "../DairyStaff";
 
 export default observer(function DairyDetailedHeader() {
   const {modalStore, dairyStore, userStore:{isLoggedIn}} = useStore();
@@ -50,11 +51,7 @@ export default observer(function DairyDetailedHeader() {
               )}
             </Item.Meta>
             <Item.Extra>
-              <Icon name="motorcycle" /> {dairy.buffaloCount} Buffaloes
-              <Icon name="battery half" style={{ marginLeft: 5 }} />{" "}
-              {dairy.cowCount} Cows
-              <Icon name="users" style={{ marginLeft: 5 }} />{" "}
-              {dairy.workerCount} Workers
+              <DairyStaff dairy={dairy} />
             </Item.Extra>
           </Item.Content>
         </Item>
