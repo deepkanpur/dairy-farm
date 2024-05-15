@@ -148,7 +148,7 @@ export default class DairyStore {
         if (this.selectedDairy) {
           this.selectedDairy.photos.push(photo);
           if (photo.isMain) {
-            this.selectedDairy.image = photo.url;
+            this.selectedDairy.image = photo.original;
           }
         }
         this.loading = false;

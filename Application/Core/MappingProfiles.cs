@@ -33,6 +33,7 @@ namespace Application.Core
             
             CreateMap<DairyFarmPhoto, DairyFarmPhotosDto>()
                 .ForMember(d => d.AddedByUserName, o => o.MapFrom(s => s.AddedBy.DisplayName))
+                .ForMember(d => d.Original, o => o.MapFrom(s => s.Url))
                 .ForMember(d => d.LocationUrl, o=> o.MapFrom(s => 
                     "http://maps.google.com/maps?q=loc:" 
                     + s.Latitude + "+" 

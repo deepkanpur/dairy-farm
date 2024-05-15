@@ -1,6 +1,6 @@
 export interface DairyPhoto {
   id: string
-  url: string
+  original: string
   description: string
   isMain: boolean
   locationUrl: string;
