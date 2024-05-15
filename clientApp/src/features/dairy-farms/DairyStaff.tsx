@@ -7,9 +7,9 @@ interface Props {
 export default function DairyStaff({ dairy }: Props) {
   return (
     <>
-      <Icon name="motorcycle" /> {dairy.buffaloCount} Buffaloes
-      <Icon name="battery half" style={{ marginLeft: 5 }} /> {dairy.cowCount} Cows
-      <Icon name="users" style={{ marginLeft: 5 }} /> {dairy.workerCount} Workers
+      <Icon name="chess knight" /> {dairy.buffaloCount} Buffaloes
+      <Icon name="chess rook" style={{ marginLeft: 6 }} /> {dairy.cowCount} Cows
+      <Icon name="users" style={{ marginLeft: 8 }} /> {dairy.workerCount} Workers
     </>
   );
 }
