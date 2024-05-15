@@ -6,7 +6,7 @@ import ImageCapture from "./photos/ImageCapture";
 import LoadingComponent from "../../../app/layout/loadingComponent";
 
 export default observer(function DairyDetailedHeader() {
-  const {modalStore, dairyStore} = useStore();
+  const {modalStore, dairyStore, userStore:{isLoggedIn}} = useStore();
   const {loading, selectedDairy: dairy} = dairyStore;
   if (!dairy) return <LoadingComponent content="Loading Dairy Header..." />;
   
@@ -23,7 +23,7 @@ export default observer(function DairyDetailedHeader() {
             {dairy.landmark && <Item.Meta>{dairy.landmark}</Item.Meta>}
             <Item.Description>
               {dairy.city} - {dairy.pincode}
-              {dairy.photos && dairy.photos.length <= 4 && (
+              {isLoggedIn  && dairy.photos && dairy.photos.length <= 4 && (
                 <Button
                   onClick={() => modalStore.openModal(<ImageCapture />)} 
                   icon="photo"
