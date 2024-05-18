@@ -161,4 +161,8 @@ export default class DairyStore {
       });
     }
   }; 
+
+  clearSeletedDairy = () => {
+    this.selectedDairy = undefined;
+  };
 }

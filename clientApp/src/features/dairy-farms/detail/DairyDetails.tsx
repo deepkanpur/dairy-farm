@@ -9,12 +9,13 @@ import LoadingComponent from "../../../app/layout/loadingComponent";
 
 export default observer(function DairyDetails() {
   const { dairyStore } = useStore();
-  const { selectedDairy: dairy, loadDairy, loadingInitial } = dairyStore;
+  const { selectedDairy: dairy, loadDairy, loadingInitial, clearSeletedDairy } = dairyStore;
   const { id } = useParams<{ id: string }>();
   
   useEffect(() => {
     if (id) loadDairy(id);
-  }, [id, loadDairy]);
+    return () => dairyStore.clearSeletedDairy();
+  }, [id, loadDairy, clearSeletedDairy]);
 
   if (loadingInitial || !dairy) return <LoadingComponent content="Loading Dairy Detail..." />;
 
@@ -22,7 +23,7 @@ export default observer(function DairyDetails() {
     <>
       <DairyDetailedHeader/>      
       <DairyPhotos />
-      <DairyDetailedChat />
+      <DairyDetailedChat dairyFarmId={dairy.id} />
     </>
   );
 });

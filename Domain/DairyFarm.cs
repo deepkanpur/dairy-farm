@@ -19,4 +19,5 @@ public class DairyFarm
     public DateTime AddedDate { get; set; }  = DateTime.UtcNow;
     public bool IsActive { get; set; } = true;
     public ICollection<DairyFarmPhoto> Photos { get; set; } = [];
+    public ICollection<Comment> Comments { get; set; } = [];
 }
