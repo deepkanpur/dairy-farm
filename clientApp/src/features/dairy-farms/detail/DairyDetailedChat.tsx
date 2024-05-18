@@ -33,8 +33,7 @@ export default observer(function DairyDetailedChat({ dairyFarmId }: Props) {
         <Header>Feedback about this Dairy</Header>
       </Segment>
       <Segment attached clearing>
-        <Comment.Group>
-        <Formik 
+      <Formik 
             onSubmit={(values, {resetForm}) => commentStore.addComments(values).then(() => resetForm())}
             initialValues={{body: ''}}
             validationSchema={Yup.object({
@@ -57,9 +56,9 @@ export default observer(function DairyDetailedChat({ dairyFarmId }: Props) {
               </Form>
             )}
           </Formik>
-
+        <Comment.Group>
           {commentStore.comments.map((comment) => (
-            <Comment key={comment.id}>
+          <Comment key={comment.id}>
               <Comment.Avatar src={comment.image || "/assets/user.png"} />
               <Comment.Content>
                 <Comment.Author as={Link} to={`/profiles/${comment.userName}`}>{comment.displayName}</Comment.Author>
@@ -71,7 +70,7 @@ export default observer(function DairyDetailedChat({ dairyFarmId }: Props) {
             </Comment>
           ))}
         </Comment.Group>
-      </Segment>
+      </Segment>      
     </>
   );
 });
