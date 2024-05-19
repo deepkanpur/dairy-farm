@@ -14,7 +14,7 @@ export default class CommentStore {
     createHubConnection = (dairyFarmId: string) => {
         if(store.dairyStore.selectedDairy) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl("http://localhost:5000/chat?dairyFarmId=" + dairyFarmId, {
+                .withUrl(import.meta.env.VITE_CHAT_URL + "?dairyFarmId=" + dairyFarmId, {
                     accessTokenFactory: () => store.userStore.user?.token as string
                 })
                 .withAutomaticReconnect()
