@@ -20,7 +20,12 @@ namespace API.Extensions
                 opt.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<DataContext>();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            var encrptionKey = config["TokenKey"];
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+            {
+                encrptionKey = Environment.GetEnvironmentVariable("DairyFarm-EncryptionKey");
+            }
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(encrptionKey));
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => {

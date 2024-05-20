@@ -16,9 +16,15 @@ namespace API.Extensions
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            var connectionString = config.GetConnectionString("DefaultConnection");
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+            {
+                connectionString = Environment.GetEnvironmentVariable("DairyFarm-DBConnection");
+            }
+
             services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+                opt.UseSqlServer(connectionString);
             });
             services.AddCors(opt =>
             {

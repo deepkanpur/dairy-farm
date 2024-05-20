@@ -22,7 +22,12 @@ namespace API.Services
                 new (ClaimTypes.NameIdentifier, user.Id),
                 new (ClaimTypes.Email, user.Email)
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
+            var encrptionKey = _config["TokenKey"];
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development") 
+            {
+                encrptionKey = Environment.GetEnvironmentVariable("DairyFarm-EncryptionKey");
+            }
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(encrptionKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor

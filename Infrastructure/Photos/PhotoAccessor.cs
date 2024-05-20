@@ -18,6 +18,12 @@ namespace Infrastructure.Photos
                 ApiKey = config.Value.ApiKeys,
                 ApiSecret = config.Value.ApiSecret
             };
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+            {
+                account.ApiKey = Environment.GetEnvironmentVariable("Cloudinary-ApiKey");
+                account.ApiSecret = Environment.GetEnvironmentVariable("Cloudinary-ApiSecret");
+                account.Cloud = Environment.GetEnvironmentVariable("Cloudinary-Cloud");
+            }
             _cloudinary = new Cloudinary(account);
         }
 
