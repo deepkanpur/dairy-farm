@@ -13,8 +13,8 @@ public class DairyFarm
     public Int16 BuffaloCount { get; set; }
     public Int16? CowCount { get; set; }
     public Int16 WorkerCount { get; set; }
-    public decimal Latitude { get; set; }
-    public decimal Longitude { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
     public AppUser AddedBy { get; set; }
     public DateTime AddedDate { get; set; }  = DateTime.UtcNow;
     public bool IsActive { get; set; } = true;

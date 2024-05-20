@@ -19,7 +19,7 @@ public class List
         public async Task<Result<PagedList<DairyFarmDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var query = context.DairyFarms.Where(a => a.IsActive)
-                .Include(x => x.Photos).Where(x => x.Photos.Any(p => p.IsActive))
+                .Include(x => x.Photos)
                 .ProjectTo<DairyFarmDto>(mapper.ConfigurationProvider)
                 .AsQueryable();
 
