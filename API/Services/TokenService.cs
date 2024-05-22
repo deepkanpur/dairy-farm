@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Domain;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +13,7 @@ namespace API.Services
         public TokenService(IConfiguration config)
         {
             _config = config;
-            
+
         }
         public string CreateToken(AppUser user)
         {
@@ -23,7 +24,7 @@ namespace API.Services
                 new (ClaimTypes.Email, user.Email)
             };
             var encrptionKey = _config["TokenKey"];
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development") 
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
             {
                 encrptionKey = Environment.GetEnvironmentVariable("DairyFarm-EncryptionKey");
             }
@@ -33,14 +34,22 @@ namespace API.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = creds
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);            
+            return tokenHandler.WriteToken(token);
+        }
+
+        public RefreshToken GetRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return new RefreshToken { Token = Convert.ToBase64String(randomNumber) };
         }
     }
 }

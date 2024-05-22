@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
-{   [ApiController]
+{
+    [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
@@ -27,11 +28,12 @@ namespace API.Controllers
         {
             var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(u => u.Email == loginDto.Email);
-            if(user == null) return Unauthorized();
+            if (user == null) return Unauthorized();
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-            if(!result) return Unauthorized();
+            if (!result) return Unauthorized();
 
+            await SetRefreshToken(user);
             return Ok(CreateUserDto(user));
         }
 
@@ -39,17 +41,17 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName))
-            { 
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName))
+            {
                 ModelState.AddModelError("username", "Username already taken");
                 return BadRequest(ModelState);
             }
-            
-            if(await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
                 ModelState.AddModelError("email", "Email already taken");
                 return BadRequest(ModelState);
-            } 
+            }
 
             var user = new AppUser
             {
@@ -60,7 +62,11 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if (result.Succeeded) return CreateUserDto(user);
+            if (result.Succeeded)
+            {
+                await SetRefreshToken(user);
+                return CreateUserDto(user);
+            }
 
             return BadRequest(result.Errors);
 
@@ -72,7 +78,46 @@ namespace API.Controllers
         {
             var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(u => u.Email == User.FindFirstValue(ClaimTypes.Email));
+
+            await SetRefreshToken(user);
+
             return CreateUserDto(user);
+        }
+
+        [Authorize]
+        [HttpPost("refreshToken")]
+        public async Task<ActionResult<UserDto>> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var user = await _userManager.Users
+                .Include(r => r.RefreshTokens)
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
+
+            if (user == null) return Unauthorized();
+
+            var oldToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken);
+
+            if (oldToken != null && !oldToken.IsActive) return Unauthorized();
+
+            if(oldToken != null) oldToken.Revoked = DateTime.UtcNow;
+
+            return CreateUserDto(user);
+        }
+
+        private async Task SetRefreshToken(AppUser user)
+        {
+            var refreshToken = _tokenService.GetRefreshToken();
+            user.RefreshTokens.Add(refreshToken);
+            await _userManager.UpdateAsync(user);
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
         }
 
         private UserDto CreateUserDto(AppUser user)
