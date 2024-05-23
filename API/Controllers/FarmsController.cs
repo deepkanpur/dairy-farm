@@ -31,7 +31,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDairyForm(Guid id, DairyFarm dairyFarm)
+        public IActionResult UpdateDairyForm(Guid id, DairyFarm dairyFarm)
         {
             dairyFarm.Id = id;
             return Ok();
