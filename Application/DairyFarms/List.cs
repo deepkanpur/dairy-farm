@@ -19,6 +19,7 @@ public class List
         public async Task<Result<PagedList<DairyFarmDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var query = context.DairyFarms.Where(a => a.IsActive)
+                .OrderByDescending(d => d.AddedDate)
                 .Include(x => x.Photos)
                 .ProjectTo<DairyFarmDto>(mapper.ConfigurationProvider)
                 .AsQueryable();

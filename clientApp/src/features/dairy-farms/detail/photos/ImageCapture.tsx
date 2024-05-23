@@ -18,7 +18,7 @@ export default function ImageCapture() {
           }}
           imageType = {IMAGE_TYPES.JPG}
           idealFacingMode={FACING_MODES.ENVIRONMENT}
-          isMaxResolution={true}
+          isSilentMode={true}
         />
       )}
     </>

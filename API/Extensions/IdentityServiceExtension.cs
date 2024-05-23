@@ -4,6 +4,7 @@ using Domain;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 
@@ -15,7 +16,7 @@ namespace API.Extensions
             this IServiceCollection services,
             IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(opt => {
+            services.AddIdentity<AppUser, IdentityRole>(opt => {
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.User.RequireUniqueEmail = true;
             })

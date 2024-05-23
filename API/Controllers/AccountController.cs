@@ -14,11 +14,15 @@ namespace API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
 
-        public AccountController(UserManager<AppUser> userManager, TokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, 
+            SignInManager<AppUser> signInManager,
+            TokenService tokenService)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _tokenService = tokenService;
         }
 
@@ -118,6 +122,12 @@ namespace API.Controllers
             };
 
             Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+
+            // sign in with claims
+            var claims = new List<Claim>();
+            var roles = await _userManager.GetRolesAsync(user);
+            claims.Add(new Claim(ClaimTypes.Role, string.Join(",", roles.ToArray())));
+            await _signInManager.SignInWithClaimsAsync(user, true, claims);
         }
 
         private UserDto CreateUserDto(AppUser user)

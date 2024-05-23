@@ -18,10 +18,10 @@ export default class DairyStore {
   }
 
   get dairiesByDate() {
-    return Array.from(this.dairyRegistry.values());
-    // return Array.from(this.dairyRegistry.values()).sort(
-    //   (a, b) => a.addedDate!.getTime() - b.addedDate!.getTime()
-    // );
+    //return Array.from(this.dairyRegistry.values());
+    return Array.from(this.dairyRegistry.values()).sort(
+      (a, b) => b.addedDate!.getTime() - a.addedDate!.getTime()
+    );
   }
 
   get groupedDairies() {   

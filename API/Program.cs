@@ -48,8 +48,12 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    await context.Database.MigrateAsync();
-    await Seed.SeedData(context, userManager);
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        await context.Database.MigrateAsync();
+    }
+    await Seed.SeedData(context, userManager, roleManager, builder.Configuration);
 
 }
 catch (Exception ex)

@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",  
   "profiles": {
-    "http": {
+    "dairy-local": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,      

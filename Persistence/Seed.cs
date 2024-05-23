@@ -1,12 +1,15 @@
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Persistence
 {
     public class Seed
     {
         public static async Task SeedData(DataContext context,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager, 
+            RoleManager<IdentityRole> roleManager, 
+            IConfiguration config)
         {
             if (!userManager.Users.Any() && !context.Activities.Any())
             {
@@ -14,27 +17,35 @@ namespace Persistence
                 {
                     new AppUser
                     {
-                        DisplayName = "Bob",
-                        UserName = "bob",
-                        Email = "bob@test.com"
+                        DisplayName = "Deep Singh Chauhan",
+                        UserName = "deep",
+                        Email = "deep@test.com"
                     },
                     new AppUser
                     {
-                        DisplayName = "Jane",
-                        UserName = "jane",
-                        Email = "jane@test.com"
-                    },
-                    new AppUser
-                    {
-                        DisplayName = "Tom",
-                        UserName = "tom",
-                        Email = "tom@test.com"
-                    },
+                        DisplayName = "Nirbhay Singh",
+                        UserName = "nirbhay",
+                        Email = "nirbhay@test.com"
+                    }
                 };
+
+                if (!context.Roles.Any(r => r.Name == SD.AdminEndUser))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(SD.AdminEndUser));
+                    await roleManager.CreateAsync(new IdentityRole(SD.SalesEndUser));
+                    await roleManager.CreateAsync(new IdentityRole(SD.DataEntryEndUser));
+                }
+
+                var tempUser = config["TempUserCred"];
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+                {
+                    tempUser = Environment.GetEnvironmentVariable("DairyFarm-TempUserCred");
+                }
 
                 foreach (var user in users)
                 {
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                    await userManager.CreateAsync(user, tempUser);
+                    await userManager.AddToRoleAsync(user, SD.AdminEndUser);
                 }
 
                 var activities = new List<Activity>
@@ -90,7 +101,7 @@ namespace Persistence
                         {
                             new ActivityAttendee
                             {
-                                AppUser = users[2],
+                                AppUser = users[0],
                                 IsHost = true
                             },
                             new ActivityAttendee
@@ -117,7 +128,7 @@ namespace Persistence
                             },
                             new ActivityAttendee
                             {
-                                AppUser = users[2],
+                                AppUser = users[1],
                                 IsHost = false
                             },
                         }
@@ -195,7 +206,7 @@ namespace Persistence
                         {
                             new ActivityAttendee
                             {
-                                AppUser = users[2],
+                                AppUser = users[0],
                                 IsHost = true
                             },
                             new ActivityAttendee
@@ -222,7 +233,7 @@ namespace Persistence
                             },
                             new ActivityAttendee
                             {
-                                AppUser = users[2],
+                                AppUser = users[1],
                                 IsHost = false
                             },
                         }
@@ -239,7 +250,7 @@ namespace Persistence
                         {
                             new ActivityAttendee
                             {
-                                AppUser = users[2],
+                                AppUser = users[0],
                                 IsHost = true
                             },
                             new ActivityAttendee
