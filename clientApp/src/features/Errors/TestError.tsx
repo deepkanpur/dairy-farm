@@ -23,11 +23,11 @@ export default function TestErrors() {
     }
 
     function handleBadGuid() {
-        axios.get('/activities/notaguid').catch(err => console.log(err.response));
+        axios.get('/Farms/notaguid').catch(err => console.log(err.response));
     }
 
     function handleValidationError() {
-        axios.post('/activities', {}).catch(err => setErrors(err));
+        axios.post('/Farms', {}).catch(err => setErrors(err));
     }
 
     return (

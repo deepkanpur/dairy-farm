@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 export default observer(function DairyDashboard() {
   const { dairyStore } = useStore();
-  const { loadDairies, dairyRegistry, setPagingParams, pagination } =
+  const { loadDairies, dairyRegistry, setPagingParams, pagination, loading } =
     dairyStore;
   const [loadingNext, setLoadingNext] = useState(false);
 
@@ -31,7 +31,7 @@ export default observer(function DairyDashboard() {
   return (
     <Grid>
       <Grid.Column width="16" textAlign='center'>
-        <Button onClick={loadDairies}>
+        <Button onClick={loadDairies} disabled={loading}>
           <Icon name='play' />
         </Button>
       </Grid.Column>

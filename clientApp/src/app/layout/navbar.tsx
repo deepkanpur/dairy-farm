@@ -19,13 +19,7 @@ export default observer(function Navbar() {
         <>        
           <Menu.Item as={NavLink} to="/addDairy"><Icon name='plus'/></Menu.Item> 
           {import.meta.env.DEV && 
-          <>
-            <Menu.Item as={NavLink} to="/activities" name="Activities" />
             <Menu.Item as={NavLink} to="/errors" name="Errors" />
-            <Menu.Item>
-              <Button as={NavLink} to="/createActivity" positive content="Create Activity" />
-            </Menu.Item>
-          </>
           }
           <Menu.Item position='right'>
             <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />

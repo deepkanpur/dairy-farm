@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Activity, ActivityFormValues } from "../models/activity";
 import { toast } from "react-toastify";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
@@ -83,16 +82,6 @@ const requests = {
   del: <T>(Url: string) => axios.delete<T>(Url).then(responseBody),
 };
 
-const Activities = {
-  list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>
-    ("/activities", {params}).then(responseBody),
-  details: (id: string) => requests.get<Activity>(`/activities/${id}`),
-  create: (activity: ActivityFormValues) => requests.post<void>("/activities", activity),
-  update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
-  delete: (id: string) => requests.del<void>(`/activities/${id}`),
-  attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})  
-};
-
 const Dairies = {
   list: (params: URLSearchParams) => axios.get<PaginatedResult<Dairy[]>>("/farms", {params}).then(responseBody),
   details: (id: string) => requests.get<Dairy>(`/farms/${id}`),
@@ -133,7 +122,6 @@ const Profiles = {
 }
 
 const agent = {
-  Activities,
   Dairies,
   Account,
   Profiles
