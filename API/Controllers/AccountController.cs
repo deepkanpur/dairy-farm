@@ -127,6 +127,7 @@ namespace API.Controllers
             var claims = new List<Claim>();
             var roles = await _userManager.GetRolesAsync(user);
             claims.Add(new Claim(ClaimTypes.Role, string.Join(",", roles.ToArray())));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
             await _signInManager.SignInWithClaimsAsync(user, true, claims);
         }
 

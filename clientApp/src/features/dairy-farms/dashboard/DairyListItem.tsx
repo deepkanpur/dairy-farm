@@ -3,12 +3,14 @@ import { Dairy } from "../../../app/models/dairy";
 import { Icon, Item, Segment} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import DairyStaff from "../DairyStaff";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
   dairy: Dairy;
 }
 
 export default observer(function DairyListItem({ dairy }: Props) {
+    const { userStore: {isLoggedIn} } = useStore();
   return (
     <Segment.Group>
         <Segment>
@@ -24,7 +26,8 @@ export default observer(function DairyListItem({ dairy }: Props) {
                         </Item.Header>
                         <Item.Description>{dairy.contactName}</Item.Description>
                         <Item.Meta>
-                            <Icon name='phone' /> {dairy.contactNumber}
+                            {isLoggedIn && <><Icon name="phone" /> {dairy.contactNumber}</>}
+                            {!isLoggedIn && <><Icon name="phone" /> {dairy.maskedContactNumber}</>}
                             {dairy.locationUrl &&
                                 <>
                                     <Icon name='map marker' color='blue' style={{marginLeft:5}} />

@@ -18,7 +18,9 @@ namespace Application.Core
                 .ForMember(d => d.LocationUrl, o=> o.MapFrom(s => 
                     "http://maps.google.com/maps?q=loc:" 
                     + s.Latitude + "+" 
-                    + s.Longitude));
+                    + s.Longitude))
+                //.ForMember(d => d.ContactNumber, opt => opt.Ignore())
+                ;
             
             CreateMap<DairyFarmPhoto, DairyFarmPhotosDto>()
                 .ForMember(d => d.AddedByUserName, o => o.MapFrom(s => s.AddedBy.DisplayName))

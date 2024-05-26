@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from "formik";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import GeoLocation from "../../../app/common/GeoLocation";
+import MyTextArea from "../../../app/common/form/MyTextArea";
 
 export default observer(function DairyForm() {
   const {dairyStore} = useStore();
@@ -31,7 +32,8 @@ export default observer(function DairyForm() {
     city: Yup.string().required().max(100),    
     buffaloCount: Yup.number().min(1, 'Can not be less than 1').required('Number of Buffaloes'),
     cowCount: Yup.number().min(0, 'Can not be less than 0').required('Number of Cows'),
-    workerCount: Yup.number().min(1, 'Can not be less than 1').required('Number of Workers'),
+    milkProduction: Yup.number().min(1, 'Can not be less than 1').required('Daily Milk Production'),
+    fodderManagement: Yup.string().max(500, 'Max 500 characters')
   });
 
   useEffect(()=>{
@@ -70,7 +72,8 @@ export default observer(function DairyForm() {
           <MyTextInput placeholder="Pincode" name={'pincode'} />
           <MyTextInput placeholder="Buffalo Count" name={'buffaloCount'} />
           <MyTextInput placeholder="Cow Count" name={'cowCount'} />
-          <MyTextInput placeholder="Worker Count" name={'workerCount'} />
+          <MyTextInput placeholder="Daily Milk Production" name={'milkProduction'} />
+          <MyTextArea placeholder="Fodder Management" name={'fodderManagement'} rows={3} />
           <Button
             disabled={isSubmitting || !dirty || !isValid}
             loading={isSubmitting}

@@ -9,7 +9,7 @@ export default function DairyStaff({ dairy }: Props) {
     <>
       <Icon name="chess knight" /> {dairy.buffaloCount} Buffaloes
       <Icon name="chess rook" style={{ marginLeft: 6 }} /> {dairy.cowCount} Cows
-      <Icon name="users" style={{ marginLeft: 8 }} /> {dairy.workerCount} Workers
+      <Icon name="users" style={{ marginLeft: 8 }} /> {dairy.milkProduction} Liter Milk
     </>
   );
 }

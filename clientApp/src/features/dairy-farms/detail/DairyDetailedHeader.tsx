@@ -36,7 +36,8 @@ export default observer(function DairyDetailedHeader() {
               )}
             </Item.Description>
             <Item.Meta>
-              <Icon name="phone" /> {dairy.contactNumber}
+              {isLoggedIn && <><Icon name="phone" /> {dairy.contactNumber}</>}
+              {!isLoggedIn && <><Icon name="phone" /> {dairy.maskedContactNumber}</>}
               {dairy.locationUrl && (
                 <>
                   <Icon
@@ -53,6 +54,11 @@ export default observer(function DairyDetailedHeader() {
             <Item.Extra>
               <DairyStaff dairy={dairy} />
             </Item.Extra>
+            {isLoggedIn && 
+              <Item.Extra>
+                {dairy.fodderManagement}
+              </Item.Extra>
+            }
           </Item.Content>
         </Item>
       </Item.Group>
