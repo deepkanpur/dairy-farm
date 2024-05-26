@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240526190128_Initial")]
+    [Migration("20240526192531_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,56 +24,6 @@ namespace Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Domain.Activity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCancelled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Venue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("Domain.ActivityAttendee", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("ActivityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsHost")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AppUserId", "ActivityId");
-
-                    b.HasIndex("ActivityId");
-
-                    b.ToTable("ActivityAttendees");
-                });
 
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
@@ -476,25 +426,6 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.ActivityAttendee", b =>
-                {
-                    b.HasOne("Domain.Activity", "Activity")
-                        .WithMany("Attendees")
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany("Activities")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Activity");
-
-                    b.Navigation("AppUser");
-                });
-
             modelBuilder.Entity("Domain.Comment", b =>
                 {
                     b.HasOne("Domain.AppUser", "Author")
@@ -600,15 +531,8 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Activity", b =>
-                {
-                    b.Navigation("Attendees");
-                });
-
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
-                    b.Navigation("Activities");
-
                     b.Navigation("Photos");
 
                     b.Navigation("RefreshTokens");
