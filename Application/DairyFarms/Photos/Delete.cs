@@ -14,10 +14,15 @@ public class Delete
         public string Id { get; set; }
     }
 
-    public class Handler(DataContext context, IPhotoAccessor photoAccessor) : IRequestHandler<Command, Result<Unit>>
+    public class Handler(DataContext context, 
+        IPhotoAccessor photoAccessor,
+        IUserAccessor userAccessor) : IRequestHandler<Command, Result<Unit>>
     {
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
+            var user = await context.Users.Include(x => x.Photos).FirstOrDefaultAsync(u => u.UserName == userAccessor.GetUserName());
+            if (user == null) return null;
+
             var dairyFarm = await context.DairyFarms.Include(x => x.Photos).FirstOrDefaultAsync(x => x.Id == request.FarmId, cancellationToken);
             if (dairyFarm == null) return null;
 

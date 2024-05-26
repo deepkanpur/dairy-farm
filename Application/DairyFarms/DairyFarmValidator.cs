@@ -15,7 +15,7 @@ public class DairyFarmValidator: AbstractValidator<DairyFarm>
         RuleFor(x => x.City).NotEmpty();            
         RuleFor(x => x.Pincode).NotEmpty();            
         RuleFor(x => x.BuffaloCount).NotEmpty();        
-        RuleFor(x => x.WorkerCount).NotEmpty();
+        RuleFor(x => x.MilkProduction).NotEmpty();
         RuleFor(x => x.Latitude).NotEmpty();
         RuleFor(x => x.Longitude).NotEmpty();
     }

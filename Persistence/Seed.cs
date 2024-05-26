@@ -279,7 +279,7 @@ namespace Persistence
                         Latitude = 43.123456,
                         Longitude = -81.123456,
                         Pincode = "123456",
-                        WorkerCount = 3,
+                        MilkProduction = 300,
                     },
                     new DairyFarm{
                         AddedBy = users[1],
@@ -296,7 +296,7 @@ namespace Persistence
                         Latitude = 43.123456,
                         Longitude = -81.123456,
                         Pincode = "123456",
-                        WorkerCount = 2,
+                        MilkProduction = 200,
                     },
                     new DairyFarm{
                         AddedBy = users[0],
@@ -313,7 +313,7 @@ namespace Persistence
                         Latitude = 43.123456,
                         Longitude = -81.123456,
                         Pincode = "123456",
-                        WorkerCount = 1,
+                        MilkProduction = 100,
                     },
                     new DairyFarm{
                         AddedBy = users[0],
@@ -330,7 +330,7 @@ namespace Persistence
                         Latitude = 43.123456,
                         Longitude = -81.123456,
                         Pincode = "123456",
-                        WorkerCount = 5,
+                        MilkProduction = 350,
                     },
                 };
 
