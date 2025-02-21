@@ -3,6 +3,11 @@ export interface User {
     displayName: string;
     token: string;
     image?: string;
+    isAdmin: boolean;
+    isDataEntryUser: boolean;
+    isDairyOwnerUser: boolean;
+    isCustomerUser: boolean;
+    isSalesUser: boolean;
 }
 
 export interface UserFormValues {

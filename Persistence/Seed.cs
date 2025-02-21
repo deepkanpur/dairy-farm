@@ -34,6 +34,8 @@ namespace Persistence
                     await roleManager.CreateAsync(new IdentityRole(SD.AdminEndUser));
                     await roleManager.CreateAsync(new IdentityRole(SD.SalesEndUser));
                     await roleManager.CreateAsync(new IdentityRole(SD.DataEntryEndUser));
+                    await roleManager.CreateAsync(new IdentityRole(SD.DairyOwnerEndUser));
+                    await roleManager.CreateAsync(new IdentityRole(SD.CustomerEndUser));
                 }
 
                 var tempUser = config["TempUserCred"];

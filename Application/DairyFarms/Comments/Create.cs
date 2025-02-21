@@ -38,6 +38,8 @@ namespace Application.DairyFarms.Comments
                     .Include(p => p.Photos)
                     .FirstOrDefaultAsync(x => x.UserName == userAccessor.GetUserName(), cancellationToken);
 
+                if (user == null) return null;
+
                 var comment = new Comment
                 {
                     Body = request.Body,

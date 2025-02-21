@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using API.DTO;
 using API.Services;
 using Domain;
@@ -6,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -69,6 +70,7 @@ namespace API.Controllers
             if (result.Succeeded)
             {
                 await SetRefreshToken(user);
+                await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);
                 return CreateUserDto(user);
             }
 
@@ -138,7 +140,12 @@ namespace API.Controllers
                 DisplayName = user.DisplayName,
                 Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
                 Token = _tokenService.CreateToken(user),
-                UserName = user.UserName
+                UserName = user.UserName,
+                IsAdmin = User.FindFirstValue(ClaimTypes.Role) == SD.AdminEndUser,
+                IsDataEntryUser = User.FindFirstValue(ClaimTypes.Role) == SD.DataEntryEndUser,
+                IsDairyOwnerUser = User.FindFirstValue(ClaimTypes.Role) == SD.DairyOwnerEndUser,
+                IsCustomerUser = User.FindFirstValue(ClaimTypes.Role) == SD.CustomerEndUser,
+                IsSalesUser = User.FindFirstValue(ClaimTypes.Role) == SD.SalesEndUser
             };
         }
     }

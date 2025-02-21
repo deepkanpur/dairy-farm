@@ -1,4 +1,4 @@
-import { Tab } from "semantic-ui-react";
+import { Tab, TabPane } from "semantic-ui-react";
 import ProfilePhotos from "./ProfilePhotos";
 import { Profile } from "../../app/models/profile";
 import ProfileAbout from "./ProfileAbout";
@@ -11,9 +11,9 @@ export default function ProfileContent({ profile }: Props) {
     const panes = [
         { menuItem: 'About', render: () => <ProfileAbout />},
         { menuItem: 'Photos', render: () => <ProfilePhotos profile={profile}/>},
-        { menuItem: 'Events', render: () => <Tab.Pane>Events Content</Tab.Pane> },
-        { menuItem: 'Followers', render: () => <Tab.Pane>Followers Content</Tab.Pane> },
-        { menuItem: 'Following', render: () => <Tab.Pane>Following Content</Tab.Pane> },
+        { menuItem: 'Events', render: () => <TabPane>Events Content</TabPane> },
+        { menuItem: 'Followers', render: () => <TabPane>Followers Content</TabPane> },
+        { menuItem: 'Following', render: () => <TabPane>Following Content</TabPane> },
     ]
 
     return(

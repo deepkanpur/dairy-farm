@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import { Button, Grid, Header, Tab } from "semantic-ui-react";
+import { Button, Grid, Header, TabPane } from "semantic-ui-react";
 import { useState } from "react";
 import Edit from "./form/Edit";
 
@@ -9,7 +9,7 @@ export default observer(function ProfileAbout() {
   const [editMode, setEditMode] = useState(false);
   
   return( 
-    <Tab.Pane>
+    <TabPane>
         <Grid>
             <Grid.Column width='16'>
                 <Header floated='left' icon='user' content={`About ${profile?.displayName}`} />
@@ -25,6 +25,6 @@ export default observer(function ProfileAbout() {
                 )}
             </Grid.Column>
         </Grid>
-    </Tab.Pane>
+    </TabPane>
 )
 })

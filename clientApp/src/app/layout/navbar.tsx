@@ -16,8 +16,10 @@ export default observer(function Navbar() {
         </Menu.Item>
         <Menu.Item as={NavLink} to="/dairies" name="Dairies" />
         {isLoggedIn && 
-        <>        
-          <Menu.Item as={NavLink} to="/addDairy"><Icon name='plus'/></Menu.Item> 
+        <>
+          {(user?.isDataEntryUser || user?.isAdmin || user?.isSalesUser) && 
+            <Menu.Item as={NavLink} to="/addDairy"><Icon name='plus'/></Menu.Item> 
+          }          
           {import.meta.env.DEV && 
             <Menu.Item as={NavLink} to="/errors" name="Errors" />
           }
