@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default observer(function DairyListItem({ dairy }: Props) {
-    const { userStore: {isLoggedIn} } = useStore();
+    const { userStore: {user, isLoggedIn} } = useStore();
   return (
     <Segment.Group>
         <Segment>
@@ -38,6 +38,11 @@ export default observer(function DairyListItem({ dairy }: Props) {
                         <Item.Extra>
                             <DairyStaff dairy={dairy} />
                         </Item.Extra>
+                        {isLoggedIn && (user?.isDataEntryUser || user?.isAdmin || user?.isSalesUser) && 
+                            <Item.Extra>
+                                <p>{dairy.fodderManagement} - <i>{dairy.addedByUserName}</i></p>
+                            </Item.Extra>
+                        }
                     </Item.Content>
                 </Item>
             </Item.Group>

@@ -7,7 +7,7 @@ import LoadingComponent from "../../../app/layout/loadingComponent";
 import DairyStaff from "../DairyStaff";
 
 export default observer(function DairyDetailedHeader() {
-  const {modalStore, dairyStore, userStore:{isLoggedIn}} = useStore();
+  const {modalStore, dairyStore, userStore:{user, isLoggedIn}} = useStore();
   const {loading, selectedDairy: dairy} = dairyStore;
   if (!dairy) return <LoadingComponent content="Loading Dairy Header..." />;
   
@@ -54,9 +54,9 @@ export default observer(function DairyDetailedHeader() {
             <Item.Extra>
               <DairyStaff dairy={dairy} />
             </Item.Extra>
-            {isLoggedIn && 
+            {isLoggedIn && (user?.isDataEntryUser || user?.isAdmin || user?.isSalesUser) &&  
               <Item.Extra>
-                {dairy.fodderManagement}
+                 <p>{dairy.fodderManagement} - <i>{dairy.addedByUserName}</i></p>
               </Item.Extra>
             }
           </Item.Content>
