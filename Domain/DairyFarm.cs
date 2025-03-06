@@ -25,6 +25,14 @@ public class DairyFarm
     public int MilkProduction { get; set; }
     [StringLength(500)]
     public string FodderManagement { get; set; }
+    [StringLength(50)]
+    public string SurveyNutrition { get; set; }
+    [StringLength(50)]
+    public string SurveyBetterMilkProduction { get; set; }
+    [StringLength(100)]
+    public string SurveyBetterFodderManagement { get; set; }
+    [StringLength(100)]
+    public string SurveyFodderRequirement { get; set; }
     [StringLength(1000)]
     public string Remark { get; set; }
     public double Latitude { get; set; }

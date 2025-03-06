@@ -33,7 +33,11 @@ export default observer(function DairyForm() {
     buffaloCount: Yup.number().min(1, 'Can not be less than 1').required('Number of Buffaloes'),
     cowCount: Yup.number().min(0, 'Can not be less than 0').required('Number of Cows'),
     milkProduction: Yup.number().min(1, 'Can not be less than 1').required('Daily Milk Production'),
-    fodderManagement: Yup.string().max(500, 'Max 500 characters')
+    fodderManagement: Yup.string().max(500, 'Max 500 characters'),
+    surveyNutrition: Yup.string().max(500, 'Max 100 characters'),
+    surveyBetterMilkProduction: Yup.string().max(500, 'Max 100 characters'),
+    surveyBetterFodderManagement: Yup.string().max(500, 'Max 100 characters'),
+    surveyFodderRequirement: Yup.string().max(500, 'Max 100 characters')
   });
 
   useEffect(()=>{
@@ -74,6 +78,10 @@ export default observer(function DairyForm() {
           <MyTextInput placeholder="Cow Count" name={'cowCount'} />
           <MyTextInput placeholder="Daily Milk Production" name={'milkProduction'} />
           <MyTextArea placeholder="Fodder Management" name={'fodderManagement'} rows={3} />
+          <MyTextArea placeholder="क्या आपको ऐसा लगता है कि हरे चारे से भूसे की तुलना में अधिक पोषण मिलता है" name={'surveyNutrition'} rows={2}/>
+          <MyTextArea placeholder="क्या आपको ऐसा लगता है कि हरे चारे से पशु के दूध में वृद्धि होती है" name={'surveyBetterMilkProduction'} rows={2}/>
+          <MyTextArea placeholder="क्या आपको ऐसा लगता है कि हरे चारे के प्रयोग से चूनी चोकर आदि की खपत कम होती है" name={'surveyBetterFodderManagement'} rows={2}/>
+          <MyTextArea placeholder="अगर हम आपको प्रतिदिन हरा चारा उपलब्ध कराये तो क्या आप हरा चारा ख़रीदेंगे? यदि हाँ तोप् रतिदिन लगभग कितने किलो" name={'surveyFodderRequirement'} rows={2}/>
           <Button
             disabled={isSubmitting || !dirty || !isValid}
             loading={isSubmitting}
