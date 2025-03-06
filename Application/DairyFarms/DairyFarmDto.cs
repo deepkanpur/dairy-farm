@@ -24,6 +24,10 @@ public class DairyFarmDto
     public Int16 CowCount { get; set; }
     public int MilkProduction { get; set; }
     public string FodderManagement { get; set; }
+    public string SurveyNutrition { get; set; }
+    public string SurveyBetterMilkProduction { get; set; }
+    public string SurveyBetterFodderManagement { get; set; }
+    public string SurveyFodderRequirement { get; set; }
     public string AddedByUserName { get; set; }
     public string LocationUrl { get; set; }
     public ICollection<DairyFarmPhotosDto> Photos { get; set; } = [];

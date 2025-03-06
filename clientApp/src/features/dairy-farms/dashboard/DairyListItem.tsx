@@ -4,6 +4,7 @@ import { Icon, Item, Segment} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import DairyStaff from "../DairyStaff";
 import { useStore } from "../../../app/stores/store";
+import DairySurveyQuestionnaire from "../DairySurveyQuestionnaire";
 
 interface Props {
   dairy: Dairy;
@@ -39,9 +40,9 @@ export default observer(function DairyListItem({ dairy }: Props) {
                             <DairyStaff dairy={dairy} />
                         </Item.Extra>
                         {isLoggedIn && (user?.isDataEntryUser || user?.isAdmin || user?.isSalesUser) && 
-                            <Item.Extra>
-                                <p>{dairy.fodderManagement} - <i>{dairy.addedByUserName}</i></p>
-                            </Item.Extra>
+                        <Item.Content>
+                            <DairySurveyQuestionnaire dairy={dairy} />
+                        </Item.Content>
                         }
                     </Item.Content>
                 </Item>

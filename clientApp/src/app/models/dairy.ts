@@ -30,6 +30,10 @@ export interface Dairy {
   cowCount: number;
   milkProduction: number;
   fodderManagement: string;
+  surveyNutrition: string;
+  surveyBetterMilkProduction: string;
+  surveyBetterFodderManagement: string;
+  surveyFodderRequirement: string;
   addedByUserName: string;
   addedDate: Date | null;
   image: string;

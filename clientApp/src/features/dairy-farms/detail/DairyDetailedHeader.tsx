@@ -5,6 +5,7 @@ import { useStore } from "../../../app/stores/store";
 import ImageCapture from "./photos/ImageCapture";
 import LoadingComponent from "../../../app/layout/loadingComponent";
 import DairyStaff from "../DairyStaff";
+import DairySurveyQuestionnaire from "../DairySurveyQuestionnaire";
 
 export default observer(function DairyDetailedHeader() {
   const {modalStore, dairyStore, userStore:{user, isLoggedIn}} = useStore();
@@ -55,9 +56,9 @@ export default observer(function DairyDetailedHeader() {
               <DairyStaff dairy={dairy} />
             </Item.Extra>
             {isLoggedIn && (user?.isDataEntryUser || user?.isAdmin || user?.isSalesUser) &&  
-              <Item.Extra>
-                 <p>{dairy.fodderManagement} - <i>{dairy.addedByUserName}</i></p>
-              </Item.Extra>
+              <Item.Content>
+                <DairySurveyQuestionnaire dairy={dairy} />
+              </Item.Content>
             }
           </Item.Content>
         </Item>
