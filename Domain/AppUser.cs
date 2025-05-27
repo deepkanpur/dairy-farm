@@ -8,5 +8,6 @@ namespace Domain
         public string Bio { get; set; }
         public ICollection<Photo> Photos { get; set; }
         public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
+        public bool IsStaff { get; set; }
     }
 }

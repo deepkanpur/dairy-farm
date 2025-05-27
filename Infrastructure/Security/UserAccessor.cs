@@ -8,6 +8,9 @@ namespace Infrastructure.Security
     {
         public string GetUserName()
         {
+            bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+            if (isDevelopment) return "deep";
+
             return httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
     }

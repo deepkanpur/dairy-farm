@@ -4,8 +4,10 @@ import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
+import { Revenue, RevenueAddValues } from "../models/revenue";
 import { Dairy, DairyFormValues, DairyPhoto, IAddDairyPhoto } from "../models/dairy";
 import { PaginatedResult } from "../models/pagination";
+import { SaleRegister, SaleRegisterAddValues, SaleListParam } from "../models/saleRegister";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -121,10 +123,28 @@ const Profiles = {
   deletePhoto: (id: string) => requests.del(`/photos/${id}`),  
 }
 
+const Revenues = {
+  list: (params: URLSearchParams) => axios.get<PaginatedResult<Revenue[]>>("/revenues", {params}).then(responseBody),  
+  details: (id: string) => requests.get<Revenue>(`/revenues/${id}`),
+  create: (dairy: RevenueAddValues) => requests.post<Revenue>("/revenues", dairy),
+  update: (dairy: RevenueAddValues) => requests.put<void>(`/revenues/${dairy.id}`, dairy),
+  // delete: (id: string) => requests.del<void>(`/revenues/${id}`),
+};
+
+const SaleRegisters = {
+  list: (params: SaleListParam) => axios.get<PaginatedResult<SaleRegister[]>>("/sales", {params}).then(responseBody),  
+  details: (id: string) => requests.get<SaleRegister>(`/sales/${id}`),
+  create: (saleRegister: SaleRegisterAddValues) => requests.post<SaleRegister>("/sales", saleRegister),
+  update: (saleRegister: SaleRegisterAddValues) => requests.put<void>(`/sales/${saleRegister.id}`, saleRegister),
+  // delete: (id: string) => requests.del<void>(`/sales/${id}`),
+};
+
 const agent = {
   Dairies,
   Account,
-  Profiles
+  Profiles,
+  Revenues,
+  SaleRegisters
 };
 
 export default agent;

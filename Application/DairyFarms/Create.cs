@@ -35,7 +35,7 @@ public class Create
 
             context.DairyFarms.Add(request.DairyFarm);
 
-            var result = await context.SaveChangesAsync() > 0;
+            var result = await context.SaveChangesAsync(cancellationToken) > 0;
 
 
             if(result) return Result<DairyFarmDto>.Success(mapper.Map<DairyFarmDto>(request.DairyFarm));

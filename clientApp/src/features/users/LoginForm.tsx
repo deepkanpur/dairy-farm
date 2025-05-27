@@ -6,10 +6,16 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function LoginForm() {
     const {userStore} = useStore();
+    let email = '';
+    let pwd = '';
+    if (import.meta.env.DEV) {
+        email = 'deep@test.com';
+        pwd = 'Span@1234';
+    }
     
     return (
         <Formik
-            initialValues={{ email: '', password: '', error: null }}
+            initialValues={{ email: email, password: pwd, error: null }}
             onSubmit={(values, {setErrors}) => {userStore.login(values).catch(() => 
                 setErrors({error: 'Invalid email or password'}));}}
         >

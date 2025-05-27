@@ -14,6 +14,12 @@ namespace Persistence
         public DbSet<DairyFarm> DairyFarms { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Revenue> Revenues { get; set; }
+        public DbSet<SaleRegister> SaleRegister { get; set; }
+        public DbSet<ExpenseTypeMaster> ExpenseTypes { get; set; }
+        public DbSet<ExpenseRegister> Expenses { get; set; }
+        public DbSet<Salary> Salaries { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

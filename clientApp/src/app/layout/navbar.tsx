@@ -11,15 +11,23 @@ export default observer(function Navbar() {
     <Menu inverted fixed="top">
       <Container>
         <Menu.Item as={NavLink} to='/' header >
-          <img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}} />
-          Dairy
+          <img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}} />          
         </Menu.Item>
         <Menu.Item as={NavLink} to="/dairies" name="Dairies" />
         {isLoggedIn && 
         <>
           {(user?.isDataEntryUser || user?.isAdmin || user?.isSalesUser) && 
-            <Menu.Item as={NavLink} to="/addDairy"><Icon name='plus'/></Menu.Item> 
-          }          
+            <>
+              <Menu.Item as={NavLink} to="/addDairy"><Icon name='plus'/></Menu.Item> 
+              <Menu.Item as={NavLink} to="/sales/add"><Icon name='book'/></Menu.Item> 
+            </>
+          }
+          {(user?.isAdmin || user?.isSalesUser) && 
+          <>
+            <Menu.Item as={NavLink} to="/revenues"><Icon name='rupee sign'/></Menu.Item> 
+            <Menu.Item as={NavLink} to="/expenses"><Icon name='credit card outline'/></Menu.Item>
+          </>
+          } 
           {import.meta.env.DEV && 
             <Menu.Item as={NavLink} to="/errors" name="Errors" />
           }
@@ -31,7 +39,7 @@ export default observer(function Navbar() {
               <DropdownItem onClick={logout} text='logout' icon='power' />
             </DropdownMenu>
             </Dropdown>
-          </Menu.Item>
+          </Menu.Item>          
         </>
         }
         { !isLoggedIn &&

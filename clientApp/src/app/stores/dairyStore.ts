@@ -24,6 +24,12 @@ export default class DairyStore {
     );
   }
 
+  get dairiesByName() {
+    return Array.from(this.dairyRegistry.values()).sort(
+      (a, b) => a.businessName.localeCompare(b.businessName)
+    );
+  }
+
   get groupedDairies() {   
     return Object.entries(
       this.dairiesByDate.reduce((dairies, dairy) => {
