@@ -4,7 +4,7 @@ import { useStore } from "../../../app/stores/store";
 import { useEffect } from "react";
 import LoadingComponent from "../../../app/layout/loadingComponent";
 import { Table } from "semantic-ui-react";
-import Dashboard from "../../sale/dashboard/dashboard";
+import Dashboard from "../../sale/dashboard/Dashboard";
 
 export default observer(function Details() {
   const { revenueStore, userStore: { user } } = useStore();

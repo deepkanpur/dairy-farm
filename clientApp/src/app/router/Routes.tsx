@@ -15,7 +15,7 @@ import AddExpense from "../../features/expense/add/add";
 import ExpenseDashboard from "../../features/expense/dashboard/Dashboard";
 import ExpenseDetails from "../../features/expense/detail/detail";
 import SaleRegister from "../../features/sale/add/SaleRegister";
-import SaleDashboard from "../../features/sale/dashboard/dashboard";
+import SaleDashboard from "../../features/sale/dashboard/Dashboard";
 
 export const routes: RouteObject[] = [
     {
