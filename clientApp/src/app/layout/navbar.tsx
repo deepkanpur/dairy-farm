@@ -25,7 +25,7 @@ export default observer(function Navbar() {
           {(user?.isAdmin || user?.isSalesUser) && 
           <>
             <Menu.Item as={NavLink} to="/revenues"><Icon name='rupee sign'/></Menu.Item> 
-            <Menu.Item as={NavLink} to="/expenses"><Icon name='credit card outline'/></Menu.Item>
+            {/* <Menu.Item as={NavLink} to="/expenses"><Icon name='credit card outline'/></Menu.Item> */}
           </>
           } 
           {import.meta.env.DEV && 
