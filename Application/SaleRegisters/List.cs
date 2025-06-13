@@ -38,8 +38,10 @@ public class List
                 .ProjectTo<SaleRegisterDto>(mapper.ConfigurationProvider)
                 .AsQueryable();
 
+            int pazeSize = request.Params.PageSize;
+            pazeSize = 5000;    //TODO: for now
             return Result<PagedList<SaleRegisterDto>>.Success(
-                await PagedList<SaleRegisterDto>.CreateAsync(queryDto, request.Params.PageNumber, request.Params.PageSize, cancellationToken)
+                await PagedList<SaleRegisterDto>.CreateAsync(queryDto, request.Params.PageNumber, pazeSize, cancellationToken)
             );
         }
     }

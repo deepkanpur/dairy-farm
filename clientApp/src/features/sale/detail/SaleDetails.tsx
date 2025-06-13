@@ -14,8 +14,11 @@ export default observer(function SaleDetails() {
   return (
     <>
     <div style={{backgroundColor: "white"}}>      
-      <Grid columns={3} celled>
+      <Grid columns={4} celled>
         <GridRow>
+          <GridColumn>
+            Date
+          </GridColumn>
           <GridColumn>
             Customer
           </GridColumn>
@@ -30,6 +33,9 @@ export default observer(function SaleDetails() {
         {saleByVolume.map((saleRegister) => (          
           <GridRow key={saleRegister.id}>
             <GridColumn>
+              {saleRegister.saleDate.toLocaleDateString('en-in')}
+            </GridColumn>
+            <GridColumn>
               {saleRegister.dairyFarmBusinessName}
             </GridColumn>
             <GridColumn>
@@ -41,6 +47,9 @@ export default observer(function SaleDetails() {
           </GridRow>          
         ))}   
         <GridRow color='grey'>
+          <GridColumn>
+            
+          </GridColumn>
           <GridColumn>
             Total
           </GridColumn>

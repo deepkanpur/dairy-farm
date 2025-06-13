@@ -11,7 +11,7 @@ export default class SaleRegisterStore {
   loading = false;
   loadingInitial = false;
   pagination: Pagination | null = null;
-  pagingParams = new PagingParams();
+  pagingParams = new PagingParams(1, 2000);
 
   constructor() {
     makeAutoObservable(this);
@@ -51,6 +51,7 @@ export default class SaleRegisterStore {
   }
 
   loadSales = async (from: Date, to: Date, dairyFarmId?: string) => {
+    console.log('id', dairyFarmId);
     this.setLoadingInitial(true);
     this.saleRegisterRegistry.clear();
     try {
