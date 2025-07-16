@@ -16,36 +16,32 @@ export default observer(function ListItem({ revenue }: Props) {
     <Table definition>
       <Table.Body>
         <Table.Row negative={!revenue.reconciled} positive={revenue.reconciled}>
-          <Table.Cell width={3}>Sale Date:</Table.Cell>
-          <Table.Cell>
+          <Table.Cell width={3}>
             <Link to={`/revenues/${revenue.id}`}>
               {new Date(revenue.saleDate).toDateString()}
             </Link>
           </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cultivated Weight:</Table.Cell>
-          <Table.Cell>{revenue.cultivatedWeight} KG</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Sold:</Table.Cell>
-          <Table.Cell>{revenue.soldWeight} KG</Table.Cell>
+          <Table.Cell>{revenue.soldWeight} KG Sold</Table.Cell>
         </Table.Row>
         
-        {(user?.isAdmin || user?.isSalesUser) && (
+        {(user?.isAdmin) && (
           <>
+            <Table.Row>
+              <Table.Cell>Cultivated Weight:</Table.Cell>
+              <Table.Cell>{revenue.cultivatedWeight} KG</Table.Cell>
+            </Table.Row>
             <Table.Row>
               <Table.Cell>Revenue:</Table.Cell>
               <Table.Cell>
                 {revenue.salePrice * revenue.soldWeight} /- Rupees
               </Table.Cell>
+            </Table.Row>          
+            <Table.Row>
+              <Table.Cell>Added By:</Table.Cell>
+              <Table.Cell>{revenue.addedByUserName} - {new Date(revenue.addedDate).toLocaleDateString('en-in')}</Table.Cell>
             </Table.Row>
           </>
         )}
-        <Table.Row>
-          <Table.Cell>Added By:</Table.Cell>
-          <Table.Cell>{revenue.addedByUserName} - {new Date(revenue.addedDate).toDateString()}</Table.Cell>
-        </Table.Row>
       </Table.Body>
     </Table>
   );

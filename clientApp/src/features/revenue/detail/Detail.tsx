@@ -42,18 +42,10 @@ export default observer(function Details() {
             <Table.Cell>{revenue.soldWeight} KG</Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Cell>Sample:</Table.Cell>
-            <Table.Cell>{revenue.sampleWeight} KG</Table.Cell>
-          </Table.Row>
-          <Table.Row>
             <Table.Cell>Donated:</Table.Cell>
             <Table.Cell>{revenue.donateWeight} KG</Table.Cell>
           </Table.Row>
-          <Table.Row>
-            <Table.Cell>Wastage:</Table.Cell>
-            <Table.Cell>{revenue.wastage} KG</Table.Cell>
-          </Table.Row>
-          {(user?.isAdmin || user?.isSalesUser) && (
+          {/* {(user?.isAdmin || user?.isSalesUser) && (
             <>
               <Table.Row>
                 <Table.Cell>Sale Price:</Table.Cell>
@@ -66,21 +58,25 @@ export default observer(function Details() {
                 </Table.Cell>
               </Table.Row>
             </>
-          )}
+          )} */}
           <Table.Row>
             <Table.Cell>Remark:</Table.Cell>
             <Table.Cell>{revenue.remark}</Table.Cell>
           </Table.Row>
-          <Table.Row>
-            <Table.Cell>Added By:</Table.Cell>
-            <Table.Cell>{revenue.addedByUserName}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Added Date:</Table.Cell>
-            <Table.Cell>
-              {new Date(revenue.addedDate).toDateString()}
-            </Table.Cell>
-          </Table.Row>
+          {(user?.isAdmin) && (
+            <>
+              <Table.Row>
+                <Table.Cell>Added By:</Table.Cell>
+                <Table.Cell>{revenue.addedByUserName}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Added Date:</Table.Cell>
+                <Table.Cell>
+                  {new Date(revenue.addedDate).toDateString()}
+                </Table.Cell>
+              </Table.Row>
+            </>
+          )}
         </Table.Body>
       </Table>
 

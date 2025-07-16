@@ -11,7 +11,7 @@ public class Revenue
     public int SalePrice { get; set; }
     public int SampleWeight { get; set; }
     public int DonateWeight { get; set; }
-    public int Wastage { get; set; }
+    public int Wastage { get; set; }    //To be deleted
     [StringLength(250)]
     public string Remark { get; set; }
     /// <summary>

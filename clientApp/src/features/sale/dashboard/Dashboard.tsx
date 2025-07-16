@@ -51,22 +51,22 @@ export default observer(function Dashboard({
             <div> 
               <div style={{display:'flex', justifyContent:'center'}}>
                 <div>
-              Sale From : {localFromDate.toLocaleDateString('en-in')} 
+              Sale From : {new Date(localFromDate).toLocaleDateString('en-in')} 
               <DatePicker 
                 name='From Date'
                 placeholderText="From Date"
                 showMonthYearPicker={true}
-                value={localFromDate.toLocaleDateString()}
+                value={new Date(localFromDate).toLocaleDateString()}
                 onChange={a => setLocalFromDate(a!)}
               />
               </div>
               <div>
-              To: {localToDate.toLocaleDateString('en-in')} 
+              To: {new Date(localToDate).toLocaleDateString('en-in')} 
               <DatePicker 
                 name='ToDate'
                 placeholderText="To Date"
                 showMonthYearPicker={false}
-                value={localToDate.toLocaleDateString()}
+                value={new Date(localToDate).toLocaleDateString()}
                 onChange={a => setLocalToDate(a!)}
               />
               </div>
