@@ -31,9 +31,9 @@ export default observer(function ListItem({ revenue }: Props) {
               <Table.Cell>{revenue.cultivatedWeight} KG</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell>Revenue:</Table.Cell>
+              <Table.Cell>Remark:</Table.Cell>
               <Table.Cell>
-                {revenue.salePrice * revenue.soldWeight} /- Rupees
+                {revenue.remark }
               </Table.Cell>
             </Table.Row>          
             <Table.Row>
