@@ -51,35 +51,35 @@ export default observer(function Dashboard({
             <div> 
               <div style={{display:'flex', justifyContent:'center'}}>
                 <div>
-              Sale From : {new Date(localFromDate).toLocaleDateString('en-in')} 
-              <DatePicker 
-                name='From Date'
-                placeholderText="From Date"
-                showMonthYearPicker={true}
-                value={new Date(localFromDate).toLocaleDateString()}
-                onChange={a => setLocalFromDate(a!)}
-              />
-              </div>
+                  Sale From : {new Date(localFromDate).toLocaleDateString('en-in')} 
+                  <DatePicker 
+                    name='From Date'
+                    placeholderText="From Date"
+                    showMonthYearPicker={false}
+                    value={new Date(localFromDate).toLocaleDateString()}
+                    onChange={a => setLocalFromDate(a!)}
+                  />
+                </div>
               <div>
-              To: {new Date(localToDate).toLocaleDateString('en-in')} 
-              <DatePicker 
-                name='ToDate'
-                placeholderText="To Date"
-                showMonthYearPicker={false}
-                value={new Date(localToDate).toLocaleDateString()}
-                onChange={a => setLocalToDate(a!)}
-              />
+                To: {new Date(localToDate).toLocaleDateString('en-in')} 
+                <DatePicker 
+                  name='ToDate'
+                  placeholderText="To Date"
+                  showMonthYearPicker={false}
+                  value={new Date(localToDate).toLocaleDateString()}
+                  onChange={a => setLocalToDate(a!)}
+                />
               </div>
-              </div>
-              <br/>
-              Customer: 
-              <Select 
-                clearable
-                value={localDairyFarmId || undefined}
-                options={customers}
-                onChange={(_, d) => setLocalDairyFarmId(d.value?.toString())}
+            </div>
+            <br/>
+            Customer: 
+            <Select 
+              clearable
+              value={localDairyFarmId || undefined}
+              options={customers}
+              onChange={(_, d) => setLocalDairyFarmId(d.value?.toString())}
             />
-            </div> }
+          </div> }
 
         <SaleDetails/>
     </>
